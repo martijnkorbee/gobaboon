@@ -1,0 +1,1 @@
+DROP INDEX IF EXISTS sessions_expiry_idx CASCADE; DROP TABLE IF EXISTS sessions CASCADE;

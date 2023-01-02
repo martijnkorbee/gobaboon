@@ -1,0 +1,61 @@
+module ${APP_NAME}
+
+go 1.19
+
+require (
+	github.com/go-chi/chi/v5 v5.0.8
+	github.com/martijnkorbee/gobaboon v1.0.0
+	github.com/upper/db/v4 v4.6.0
+	golang.org/x/crypto v0.4.0
+)
+
+require (
+	github.com/AndreasBriese/bbloom v0.0.0-20190825152654-46b345b51c96 // indirect
+	github.com/BurntSushi/toml v1.2.1 // indirect
+	github.com/CloudyKit/fastprinter v0.0.0-20200109182630-33d98a066a53 // indirect
+	github.com/CloudyKit/jet/v6 v6.2.0 // indirect
+	github.com/alexedwards/scs/badgerstore v0.0.0-20221223131519-238b052508b6 // indirect
+	github.com/alexedwards/scs/mysqlstore v0.0.0-20221223131519-238b052508b6 // indirect
+	github.com/alexedwards/scs/postgresstore v0.0.0-20221223131519-238b052508b6 // indirect
+	github.com/alexedwards/scs/redisstore v0.0.0-20221223131519-238b052508b6 // indirect
+	github.com/alexedwards/scs/sqlite3store v0.0.0-20221223131519-238b052508b6 // indirect
+	github.com/alexedwards/scs/v2 v2.5.0 // indirect
+	github.com/cespare/xxhash v1.1.0 // indirect
+	github.com/denisenkom/go-mssqldb v0.11.0 // indirect
+	github.com/dgraph-io/badger v1.6.2 // indirect
+	github.com/dgraph-io/ristretto v0.0.2 // indirect
+	github.com/dustin/go-humanize v1.0.0 // indirect
+	github.com/go-chi/chi v1.5.4 // indirect
+	github.com/go-chi/httplog v0.2.5 // indirect
+	github.com/go-sql-driver/mysql v1.6.0 // indirect
+	github.com/go-test/deep v1.1.0 // indirect
+	github.com/golang-sql/civil v0.0.0-20190719163853-cb61b32ac6fe // indirect
+	github.com/golang/protobuf v1.5.2 // indirect
+	github.com/gomodule/redigo v1.8.9 // indirect
+	github.com/jackc/chunkreader/v2 v2.0.1 // indirect
+	github.com/jackc/pgconn v1.11.0 // indirect
+	github.com/jackc/pgio v1.0.0 // indirect
+	github.com/jackc/pgpassfile v1.0.0 // indirect
+	github.com/jackc/pgproto3/v2 v2.2.0 // indirect
+	github.com/jackc/pgservicefile v0.0.0-20200714003250-2b9c44734f2b // indirect
+	github.com/jackc/pgtype v1.10.0 // indirect
+	github.com/jackc/pgx/v4 v4.15.0 // indirect
+	github.com/joho/godotenv v1.4.0 // indirect
+	github.com/justinas/nosurf v1.1.1 // indirect
+	github.com/lib/pq v1.10.4 // indirect
+	github.com/mattn/go-colorable v0.1.13 // indirect
+	github.com/mattn/go-isatty v0.0.16 // indirect
+	github.com/mattn/go-sqlite3 v1.14.15 // indirect
+	github.com/pkg/errors v0.9.1 // indirect
+	github.com/robfig/cron/v3 v3.0.1 // indirect
+	github.com/rs/cors v1.8.3 // indirect
+	github.com/rs/zerolog v1.28.0 // indirect
+	github.com/segmentio/fasthash v1.0.3 // indirect
+	github.com/toorop/go-dkim v0.0.0-20201103131630-e1cd1a0a5208 // indirect
+	github.com/xhit/go-simple-mail/v2 v2.13.0 // indirect
+	golang.org/x/net v0.3.0 // indirect
+	golang.org/x/sys v0.3.0 // indirect
+	golang.org/x/text v0.5.0 // indirect
+	google.golang.org/protobuf v1.27.1 // indirect
+	gopkg.in/natefinch/lumberjack.v2 v2.0.0 // indirect
+)
