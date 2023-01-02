@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"os"
 	"os/exec"
+	"path/filepath"
 	"strings"
 
 	"github.com/fatih/color"
@@ -36,13 +37,17 @@ var makeNewCmd = &cobra.Command{
 		mustCreateDotEnv(appName)
 
 		// update the go.mod file
-		mustUpdateGoModFile(appName, makeNewName)
+		mustUpdateGoModFile(appName)
 
 		// change to new project dir
 		err := os.Chdir("./" + appName)
 		if err != nil {
 			util.PrintFatal("failed to cd to app directory", errors.New("couldn't cd in app directory"))
 		}
+
+		// update the existing .go files with correct name and imports
+		color.Yellow("\tUpdating source files...")
+		mustUpdateSourceFiles()
 
 		// run go mod tidy in the project directory
 		color.Yellow("\tRunning go mod tidy...")
@@ -120,7 +125,7 @@ func mustCloneSkeleton(appName string) {
 	}
 }
 
-func mustUpdateGoModFile(appName, appURL string) {
+func mustUpdateGoModFile(appName string) {
 	color.Yellow("\tCreating go.mod file...")
 
 	_ = os.Remove("./" + appName + "/go.mod")
@@ -131,12 +136,56 @@ func mustUpdateGoModFile(appName, appURL string) {
 	}
 
 	mod := string(data)
-	mod = strings.ReplaceAll(mod, "${APP_NAME}", appURL)
+	mod = strings.ReplaceAll(mod, "${APP_NAME}", makeNewName)
 
 	err = os.WriteFile(fmt.Sprintf("./%s/go.mod", appName), []byte(mod), 0644)
 	if err != nil {
 		util.PrintFatal("failed write go mod file", err)
 	}
+}
+
+func mustUpdateSourceFiles() {
+	// walk entire project folder, including subfolders
+	err := filepath.Walk(".", updateSoureFile)
+	if err != nil {
+		util.PrintFatal("failed to update source file", err)
+	}
+}
+
+func updateSoureFile(path string, fi os.FileInfo, err error) error {
+	// check for an error before doing anything else
+	if err != nil {
+		return err
+	}
+
+	// check if file is directory
+	if fi.IsDir() {
+		return nil
+	}
+
+	// only check go files
+	matched, err := filepath.Match("*.go", fi.Name())
+	if err != nil {
+		return err
+	}
+
+	if matched {
+		// read file
+		read, err := os.ReadFile(path)
+		if err != nil {
+			return err
+		}
+
+		// replace placeholder app name and write new file
+		updated := strings.ReplaceAll(string(read), "baboonapp", makeNewName)
+
+		err = os.WriteFile(path, []byte(updated), 0644)
+		if err != nil {
+			return err
+		}
+	}
+
+	return nil
 }
 
 func mustCreateMakeFile(appName string) {
