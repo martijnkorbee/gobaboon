@@ -78,27 +78,27 @@ func mustLoadConfig(path string) Config {
 	// convert .env variables
 	debug, err := strconv.ParseBool(os.Getenv("DEBUG"))
 	if err != nil {
-		log.Fatalln("failed to load config:", err)
+		log.Fatalln("failed to load config invalid debug value:", err)
 	}
 
 	cookieSecure, err = strconv.ParseBool(os.Getenv("COOKIE_SECURE"))
 	if err != nil {
-		log.Fatalln("failed to load config:", err)
+		cookieSecure = false
 	}
 
 	cookieLifeTime, err = strconv.Atoi(os.Getenv("COOKIE_LIFETIME"))
 	if err != nil {
-		log.Fatalln("failed to load config:", err)
+		cookieLifeTime = 1440
 	}
 
 	cookiePersist, err = strconv.ParseBool(os.Getenv("COOKIE_PERSIST"))
 	if err != nil {
-		log.Fatalln("failed to load config:", err)
+		cookiePersist = false
 	}
 
 	mailerPort, err = strconv.Atoi(os.Getenv("SMTP_PORT"))
 	if err != nil {
-		log.Fatalln("failed to load config:", err)
+		mailerPort = 0
 	}
 
 	return Config{
