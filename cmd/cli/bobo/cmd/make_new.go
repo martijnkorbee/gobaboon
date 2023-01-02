@@ -61,7 +61,7 @@ var makeNewCmd = &cobra.Command{
 		util.PrintSuccess(fmt.Sprint("done creating new baboonapp:", appName))
 
 		color.Yellow("\tBuilding: %s", appName)
-		command = exec.Command("make", "build")
+		command = exec.Command("make", "build_app")
 		output, err = command.CombinedOutput()
 		if err != nil {
 			color.Red(fmt.Sprint(err) + ": " + string(output))
