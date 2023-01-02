@@ -78,7 +78,7 @@ func mustLoadConfig(path string) Config {
 	// convert .env variables
 	debug, err := strconv.ParseBool(os.Getenv("DEBUG"))
 	if err != nil {
-		log.Fatalln("failed to load config invalid debug value:", err)
+		debug = false
 	}
 
 	cookieSecure, err = strconv.ParseBool(os.Getenv("COOKIE_SECURE"))
