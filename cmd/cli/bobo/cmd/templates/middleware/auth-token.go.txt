@@ -16,9 +16,11 @@ func (m *Middleware) AuthToken(next http.Handler) http.Handler {
 			}
 
 			payload.Error = true
-			payload.Message = "invalid authentication credentials"
+			payload.Message = "not authorized"
 
 			_ = util.WriteJSON(w, http.StatusUnauthorized, payload)
 		}
+
+		next.ServeHTTP(w, r)
 	})
 }
