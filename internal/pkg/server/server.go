@@ -133,3 +133,7 @@ func (s *Server) Run() error {
 
 	return nil
 }
+
+func (s *Server) ActivateMaintenanceMode() {
+	MaintenanceMode = true
+}
