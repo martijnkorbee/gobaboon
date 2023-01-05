@@ -77,7 +77,8 @@ func (l *LoggerConfig) Start() *Logger {
 	var writers []io.Writer
 
 	// log default settings
-	log = log.With().Str("service", l.Service).Timestamp().Logger()
+	zerolog.TimeFieldFormat = zerolog.TimeFormatUnixMicro
+	log = log.Level(zerolog.InfoLevel).With().Str("service", l.Service).Timestamp().Logger()
 
 	// log debug settings
 	if l.Debug {
