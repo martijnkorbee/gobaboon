@@ -64,7 +64,9 @@ func (m *Mailer) SendSMTPMessage(msg Message) error {
 		SetBody(mail.TextHTML, formattedMsg).
 		AddAlternative(mail.TextPlain, plainTextMsg)
 
-	// TODO: add attachments
+	for _, atch := range msg.Attachments {
+		email.AddAttachment(atch, atch)
+	}
 
 	err = email.Send(smtpClient)
 	if err != nil {
