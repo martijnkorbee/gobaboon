@@ -55,6 +55,11 @@ func (m *Mailer) SendSMTPMessage(msg Message) error {
 		return err
 	}
 
+	// set default from address
+	if msg.From == "" {
+		msg.From = m.settings.From
+	}
+
 	email := mail.NewMSG()
 	email.SetFrom(msg.From).
 		AddTo(msg.To...).
