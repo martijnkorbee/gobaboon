@@ -215,7 +215,7 @@ func (b *Baboon) mustConnectToDB() *db.Database {
 
 	// format sqlite filepath
 	if b.Config.DatabaseConfig.Dialect == "sqlite" {
-		filepath = fmt.Sprintf("%s/database/data/sqlite/%s.db", b.Config.Rootpath, b.Config.DatabaseConfig.Name)
+		filepath = fmt.Sprintf("%s/db-data/sqlite/%s.db", b.Config.Rootpath, b.Config.DatabaseConfig.Name)
 	}
 
 	// connect to db

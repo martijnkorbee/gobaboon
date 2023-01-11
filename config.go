@@ -4,7 +4,6 @@ import (
 	"net/http"
 
 	"github.com/martijnkorbee/gobaboon/internal/pkg/cache"
-	"github.com/martijnkorbee/gobaboon/internal/pkg/server"
 	"github.com/martijnkorbee/gobaboon/pkg/db"
 	"github.com/martijnkorbee/gobaboon/pkg/mail"
 )
@@ -47,7 +46,7 @@ type Config struct {
 	Redis cache.RedisConfig
 
 	// Cookie holds cookie configuration
-	Cookie server.CookieConfig
+	Cookie CookieConfig
 
 	// DatabaseConfig holds the database configuration.
 	DatabaseConfig db.DatabaseConfig
