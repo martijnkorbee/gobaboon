@@ -31,7 +31,8 @@ type DatabaseConfig struct {
 }
 
 type Options struct {
-	SSLmode string
+	SSLmode                string
+	TrustServerCertificate string
 }
 
 // NewConnection takes in a database configuration, for sqlite a single full file path,
