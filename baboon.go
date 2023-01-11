@@ -48,9 +48,9 @@ type Baboon struct {
 }
 
 // New creates a new baboon app
-func (b *Baboon) Init(rootpath string) error {
-	// load config
-	b.Config = mustLoadConfig(rootpath)
+func (b *Baboon) Init(c Config) error {
+	// set config
+	b.Config = c
 
 	// start baboon logger
 	log := &logger.LoggerConfig{
@@ -77,7 +77,7 @@ func (b *Baboon) Init(rootpath string) error {
 		"logs",
 	}
 	for _, fname := range fnames {
-		err := util.CreateDirIfNotExists(rootpath + "/" + fname)
+		err := util.CreateDirIfNotExists(b.Config.Rootpath + "/" + fname)
 		if err != nil {
 			return err
 		}
@@ -122,7 +122,7 @@ func (b *Baboon) Init(rootpath string) error {
 
 	// create a new mailer
 	if b.Config.MailerService != "" {
-		if mail, err := mail.NewMailer(parseMailConfig(b.Config), b.Config.MailerService, rootpath+"/templates/mail"); err != nil {
+		if mail, err := mail.NewMailer(parseMailConfig(b.Config), b.Config.MailerService, b.Config.Rootpath+"/templates/mail"); err != nil {
 			return err
 		} else {
 			b.Mailer = mail
