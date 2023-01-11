@@ -1,6 +1,7 @@
 package rpc
 
 import (
+	"fmt"
 	"net"
 	"net/rpc"
 
@@ -8,16 +9,19 @@ import (
 )
 
 type RPCServer struct {
+	// same as server host
+	Host string
 	// defaults to 4004
 	Port string
 }
 
-func NewRPCServer(port string) *RPCServer {
+func NewRPCServer(host, port string) *RPCServer {
 	if port == "" {
 		port = "4004"
 	}
 
 	return &RPCServer{
+		Host: host,
 		Port: port,
 	}
 }
@@ -29,7 +33,7 @@ func (r *RPCServer) Run() error {
 		return err
 	}
 
-	listen, err := net.Listen("tcp", "127.0.0.1:"+r.Port)
+	listen, err := net.Listen("tcp", fmt.Sprintf("%s:%s", r.Host, r.Port))
 	if err != nil {
 		return err
 	}
