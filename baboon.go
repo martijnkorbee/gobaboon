@@ -87,7 +87,7 @@ func (b *Baboon) Init(c Config) error {
 	b.Scheduler = cron.New()
 
 	// create RPC server
-	b.RPCServer = rpc.NewRPCServer(b.Config.RPCport)
+	b.RPCServer = rpc.NewRPCServer(b.Config.Host, b.Config.RPCport)
 
 	// connect to database
 	if b.Config.DatabaseConfig.Dialect != "" {
