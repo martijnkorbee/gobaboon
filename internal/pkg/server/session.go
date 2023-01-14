@@ -63,8 +63,6 @@ func (s *Session) SetPersistentStoreDatabase(dialect string, driver *sql.DB) err
 		s.Manager.Store = mysqlstore.New(driver)
 	case "sqlite":
 		s.Manager.Store = sqlite3store.New(driver)
-	case "redis":
-	case "badger":
 	default:
 		return errors.New("failed to set persistent store, db type not supported")
 	}
