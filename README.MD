@@ -5,11 +5,11 @@
 
 <div>
   <p>
-  💥: Gopher by: https://github.com/MariaLetta/free-gophers-pack<br>
-  🐍: CLI-tools with: https://github.com/spf13/cobra<br>
-  🕸️: Routing with: https://github.com/go-chi/chi<br>
-  📰: Logging with: https://github.com/rs/zerolog and https://github.com/natefinch/lumberjack<br>
-  🏠:: Databases with: https://github.com/upper/db<br> 
+  💥 Gopher by: https://github.com/MariaLetta/free-gophers-pack<br>
+  🐍 CLI-tools with: https://github.com/spf13/cobra<br>
+  🕸️ Routing with: https://github.com/go-chi/chi<br>
+  📰 Logging with: https://github.com/rs/zerolog and https://github.com/natefinch/lumberjack<br>
+  🏠 Databases with: https://github.com/upper/db<br> 
   </p>
 </div>
 
