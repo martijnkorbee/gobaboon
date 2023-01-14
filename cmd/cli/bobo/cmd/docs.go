@@ -1,10 +1,10 @@
-ackage cmd
+package cmd
 
 import (
 	"log"
-	"maeve/cmd/cli/cmd/internal/pkg/util"
 	"os"
 
+	"github.com/martijnkorbee/gobaboon/cmd/cli/internal/pkg/util"
 	"github.com/spf13/cobra"
 	"github.com/spf13/cobra/doc"
 )
