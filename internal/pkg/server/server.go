@@ -134,6 +134,12 @@ func (s *Server) Run() error {
 	return nil
 }
 
+// ActivateMaintenanceMode is replaced by SetMaintenanceMode. ActivateMaintenceMode calls SetMaintenanceMode true.
 func (s *Server) ActivateMaintenanceMode() {
-	MaintenanceMode = true
+	s.SetMaintenanceMode(true)
+}
+
+// SetMaintenaceMode sets the server in or out of maintenance mode.
+func (s *Server) SetMaintenanceMode(on bool) {
+	MaintenanceMode = on
 }
