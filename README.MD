@@ -18,7 +18,7 @@
 * [databases](#database-support)
 * [caching](#caching)
 * [sessions](#sessions) 
-* [csrf](#csrf)
+* [CSRF](#csrf)
 * [CORS](#cors)
 
 ## bobo cli
