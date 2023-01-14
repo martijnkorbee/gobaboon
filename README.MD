@@ -1,6 +1,6 @@
 <div align="center">
   <img src="https://github.com/martijnkorbee/gobaboon/blob/master/gopher.png" width="200">
-  <h1 align="center">Project Maeve</h1>
+  <h1 align="center">Gobaboon</h1>
 </div>
 
 <div>
