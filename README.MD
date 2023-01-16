@@ -1,5 +1,5 @@
 <div align="center">
-  <img src="https://github.com/martijnkorbee/gobaboon/blob/master/gopher.png" width="200">
+  <img src="https://github.com/martijnkorbee/gobaboon/blob/master/gopher.png" width="150">
   <h1 align="center">Gobaboon</h1>
 </div>
 
