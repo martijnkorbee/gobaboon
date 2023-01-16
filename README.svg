@@ -3,11 +3,16 @@
     <div xmlns="http://www.w3.org/1999/xhtml">
 
       <style>
-        h1 {font-size:30px;}
+        .title {
+          display: flex;
+        }
       </style>
 
       <!-- your HTML -->
-      <h1>Gobaboon</h1>
+      <div class="title">
+        <h1>Gobaboon</h1>
+        <img src="https://github.com/martijnkorbee/gobaboon/gopher.png" width="100px">
+      </div>
 
     </div>
   </foreignObject>
