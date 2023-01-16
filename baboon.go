@@ -71,10 +71,11 @@ func (b *Baboon) Init(c Config) error {
 		"http/middleware",
 		"database/models",
 		"database/migrations",
-		"database/data",
+		"db-data",
 		"templates/views",
 		"templates/mail",
 		"logs",
+		"tmp",
 	}
 	for _, fname := range fnames {
 		err := util.CreateDirIfNotExists(b.Config.Rootpath + "/" + fname)
