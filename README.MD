@@ -21,6 +21,7 @@
 * [Authentication](#authentication) 
 * [Sessions](#sessions)
 * [Middleware](#middleware)
+* [Routes and handlers](#routes-and-handlers)
 
 ## Database support
 Supported databases:
@@ -78,5 +79,9 @@ bobo make session
 _Note: Set persistent session store by configuring the correct session type in the .env file._
 
 ## Middleware
-* CSRF proection is automatically enforced by the baboon server, exempts all API routes.
+Add your middleware to http/middleware.
+* CSRF protection is automatically enforced by the baboon server, exempts all API routes.
 * CORS is automatically enabled by the baboon server on API routes.
+
+## Routes and Handlers
+Add your routes and handlers to their respective folders in the http directory.
