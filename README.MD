@@ -13,7 +13,7 @@
   </p>
 </div>
 
-## GO
+## GOTO
 * [bobo-cli](#bobo-cli)
 * [databases](#database-support)
 * [caching](#caching)
@@ -21,7 +21,7 @@
 * [CSRF](#csrf)
 * [CORS](#cors)
 
-## bobo cli
+## bobo-cli
 
 Bobo is a quality of life improvement for building web apps and services.
 
