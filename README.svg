@@ -11,7 +11,7 @@
       <!-- your HTML -->
       <div class="title">
         <h1>Gobaboon</h1>
-        <img src="https://github.com/martijnkorbee/gobaboon/gopher.png" width="100px">
+        <img src="https://raw.githubusercontent.com/martijnkorbee/gobaboon/master/gopher.png" width="100px">
       </div>
 
     </div>
