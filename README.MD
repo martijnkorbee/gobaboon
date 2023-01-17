@@ -4,12 +4,13 @@
 </div>
 
 <div>
-  <p>The Baboon project evolved from https://github.com/martijnkorbee/goracoon which is created following a golang course. Compared to Racoon, the project structure and inner workings had a major overhaul, inspired by: https://github.com/golang-standards/project-layout. Baboon aims to kickstart the development of go web and api applications by laying out a project structure and doing a lot of scafolding for tasks that could be repetitive in various projects.</p>
-  <p>🟠 Gopher by: https://github.com/MariaLetta/free-gophers-pack<br></p>
+  <p align="left">Baboon aims to kickstart the development of go web and api applications by laying out a project structure and doing the scafolding for tasks that could be seen as repetitive in various projects.</p>
+  <p>At the moment of writing I am using Baboon for a (real-world) REST API.</p>
 </div>
 
 <div>
-  <p>At the moment of writing I am using Baboon for a (real-world) REST API.</p>
+  <p>The Baboon project evolved from https://github.com/martijnkorbee/goracoon which is created following a golang course. Compared to Racoon, the project structure and inner workings had a major overhaul, inspired by: https://github.com/golang-standards/project-layout.</p>
+  <p>🟠 Gopher by: https://github.com/MariaLetta/free-gophers-pack<br></p>
 </div>
 
 <div>
