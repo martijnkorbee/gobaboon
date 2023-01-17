@@ -13,31 +13,29 @@
   💡 Sessions with: https://github.com/alexedwards/scs<br>
   🛑 CSRF protection with: https://github.com/justinas/nosurf<br>
   </p>
+  
+  #### Supported databases
+  * Postgresql
+  * Mysql/MariaDB
+  * SQLite3
+  * SQL Server -> (not supported by bobo-cli)
+
+  #### Supported caching
+  * Redis
+  * BadgerDB
 </div>
 
 ## GOTO
 * [Bobo-cli](#bobo-cli)
 * [Getting started](#getting-started)
+* [Project structure](#project-structure)
 * [Authentication](#authentication) 
 * [Sessions](#sessions)
 * [Middleware](#middleware)
 * [Routes and handlers](#routes-and-handlers)
 
-## Database support
-Supported databases:
-* Postgresql
-* Mysql/MariaDB
-* SQLite3
-* SQL Server -> (not supported by bobo-cli)
-
-## Caching
-Supported caching:
-* Redis
-* BadgerDB
-
 ## Bobo-cli
-Bobo is a quality of life improvement for building web apps and services.<br>
-Refer to the full documentation: [docs](https://github.com/martijnkorbee/gobaboon/tree/master/cmd/cli/bobo)
+Refer to the full documentation: [bobo-cli docs](https://github.com/martijnkorbee/gobaboon/tree/master/cmd/cli/bobo)
 
 ## Getting started
 Clone the repo.
@@ -60,6 +58,51 @@ make install_cli
 Create a new skeleton app in the current directory.
 ```
 bobo make new -n <appname>
+```
+
+## Project structure
+This is the project structure of a fresh baboon kickstarted project.
+```
+├── cmd
+│   └── web
+│       ├── app
+│       │   ├── app.go
+│       │   └── init-app.go
+│       ├── bin
+│       │   └── testapp
+│       └── main.go
+├── database
+│   └── models
+│       └── models.go
+├── go.mod
+├── go.sum
+├── http
+│   ├── handlers
+│   │   ├── handlers-api.go
+│   │   └── handlers.go
+│   ├── middleware
+│   │   └── middleware.go
+│   └── routes
+│       ├── routes-api.go
+│       └── routes.go
+├── LICENSE.md
+├── Makefile
+├── public
+│   └── static
+│       ├── html
+│       │   └── maintenance.html
+│       └── images
+│           └── gobaboon.jpg
+├── README.md
+└── templates
+    ├── mail
+    │   ├── mail.html.tmpl
+    │   └── mail.plain.tmpl
+    └── views
+        ├── home.jet
+        ├── home.page.tmpl
+        └── layouts
+            └── base.jet
 ```
 
 ## Authentication
