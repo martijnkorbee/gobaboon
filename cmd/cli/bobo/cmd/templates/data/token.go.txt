@@ -18,7 +18,7 @@ type Token struct {
 	FirstName string `db:"first_name" json:"first_name"`
 	Email     string `db:"email" json:"email"`
 	PlainText string `db:"token" json:"token"`
-	Hash      []byte `db:"token_hash" json:"-"`
+	Hash      string `db:"token_hash" json:"-"`
 	CreatedAt string `db:"created_at" json:"created_at"`
 	UpdatedAt string `db:"updated_at" json:"updated_at"`
 	Expires   string `db:"expiry" json:"expiry"`
@@ -43,7 +43,7 @@ func (t *Token) GenerateToken(userID int, ttl time.Duration) (token *Token, err 
 	token.PlainText = base32.StdEncoding.WithPadding(base32.NoPadding).EncodeToString(randomBytes)
 	hash := sha256.Sum256([]byte(token.PlainText))
 
-	token.Hash = hash[:]
+	token.Hash = string(hash[:])
 
 	return token, nil
 }
@@ -127,9 +127,9 @@ func (t *Token) GetTokenByEmail(email string) (token *Token, err error) {
 	return token, nil
 }
 
-func (t *Token) GetTokenByToken(plainText string) (token *Token, err error) {
+func (t *Token) GetTokenByToken(hash string) (token *Token, err error) {
 	collection := database.Collection(t.Table())
-	res := collection.Find(upper.Cond{"token =": plainText})
+	res := collection.Find(upper.Cond{"token_hash =": hash})
 	err = res.One(&token)
 	if err != nil {
 		return nil, err
@@ -157,8 +157,10 @@ func (t *Token) AuthenticateToken(r *http.Request) (u *User, err error) {
 		return nil, errors.New("wrong token")
 	}
 
+	hash := sha256.Sum256([]byte(authToken))
+
 	// check if token exists
-	token, err := t.GetTokenByToken(authToken)
+	token, err := t.GetTokenByToken(string(hash[:]))
 	if err != nil {
 		return nil, errors.New("wrong token")
 	}
