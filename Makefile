@@ -4,6 +4,6 @@ build_bobo:
 	@echo "Bobo has been built!"
 
 install_bobo:
-	@echo "Installing bobo in ${HOME}/bin ..."
-	@go build -o ${HOME}/bin/bobo ./cmd/cli/bobo
+	@echo "Installing bobo in ${HOME}/go/bin ..."
+	@go build -o ${HOME}/go/bin/bobo ./cmd/cli/bobo
 	@echo "Bobo has been installed!"
