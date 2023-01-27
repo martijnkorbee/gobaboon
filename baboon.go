@@ -14,7 +14,6 @@ import (
 	"github.com/martijnkorbee/gobaboon/pkg/db"
 	"github.com/martijnkorbee/gobaboon/pkg/logger"
 	"github.com/martijnkorbee/gobaboon/pkg/mail"
-	"github.com/martijnkorbee/gobaboon/pkg/util"
 	"github.com/robfig/cron/v3"
 )
 
@@ -64,29 +63,6 @@ func (b *Baboon) Init(c Config) error {
 		LocalTime:  true,
 	}
 	b.Log = log.Start()
-
-	// check if not exist create expected folders for a new baboon app
-	fnames := []string{
-		"cmd/web/app",
-		"cmd/web/bin",
-		"http/handlers",
-		"http/middleware",
-		"http/routes",
-		"database/models",
-		"database/migrations",
-		"db-data",
-		"templates/views",
-		"templates/mail",
-		"public/static",
-		"logs",
-		"tmp",
-	}
-	for _, fname := range fnames {
-		err := util.CreateDirIfNotExists(b.Config.Rootpath + "/" + fname)
-		if err != nil {
-			return err
-		}
-	}
 
 	// create scheduler
 	b.Scheduler = cron.New()
