@@ -1,4 +1,4 @@
-#! /bin/bash
+#!/bin/bash
 
 # Simple script to pre-build binaries to include in github releases.
 
