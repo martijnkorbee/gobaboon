@@ -1,1 +1,3 @@
 cmd/cli/bobo/bin/*
+.vscode/*
+.idea/*

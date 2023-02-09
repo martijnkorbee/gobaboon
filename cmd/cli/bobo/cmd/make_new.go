@@ -133,7 +133,7 @@ func mustCloneSkeleton(appName string) {
 	color.Yellow("\tCloning git repository...")
 
 	_, err := git.PlainClone("./"+appName, false, &git.CloneOptions{
-		URL:      "git@github.com:martijnkorbee/baboonapp.git",
+		URL:      "https://github.com/martijnkorbee/baboonapp.git",
 		Progress: os.Stdout,
 		Depth:    1,
 	})
