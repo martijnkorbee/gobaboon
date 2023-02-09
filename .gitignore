@@ -1,3 +1,4 @@
-cmd/cli/bobo/bin/*
 .vscode/*
 .idea/*
+bin/*
+*tar.gz
