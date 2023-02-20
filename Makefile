@@ -7,3 +7,6 @@ install_bobo:
 	@echo "Installing bobo in ${HOME}/go/bin ..."
 	@go install ./cmd/cli/bobo
 	@echo "Bobo has been installed!"
+
+pre-build_bobo:
+	@./build-assets.sh
