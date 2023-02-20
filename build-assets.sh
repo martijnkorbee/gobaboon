@@ -12,7 +12,7 @@ echo "Compiling linux-amd64 ..."
 GOOS=linux GOARCH=amd64 go build -o ./bin/bobo.linux-amd64 ./cmd/cli/bobo
 
 echo "Running tar -czf for binaries in ./bin"
-mkdir -p ./release-assets
-for f in $(ls ./bin); 
-	do tar -czf ./release-assets/$f.tar.gz ./bin/$f; 
+mkdir -p ./assets
+for f in  $(cd ./bin && echo *);
+	do tar -czf ./assets/"$f".tar.gz -C ./bin ./"$f";
 done;
