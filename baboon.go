@@ -68,7 +68,8 @@ func (b *Baboon) Init(c Config) error {
 	b.Scheduler = cron.New()
 
 	// create RPC server
-	b.RPCServer = rpc.NewRPCServer(b.Config.Host, b.Config.RPCport)
+	// TODO: disabled
+	//b.RPCServer = rpc.NewRPCServer(b.Config.Host, b.Config.RPCport)
 
 	// connect to database
 	if b.Config.DatabaseConfig.Dialect != "" {
@@ -141,8 +142,9 @@ func (b *Baboon) Run() error {
 	}
 
 	// start RPC server
-	b.Log.Info().Str("port", b.RPCServer.Port).Msg("starting RPC server")
-	go b.RPCServer.Run()
+	// TODO: disabled
+	//b.Log.Info().Str("port", b.RPCServer.Port).Msg("starting RPC server")
+	//go b.RPCServer.Run()
 
 	// start web server
 	b.Log.Info().Str("port", b.Config.Port).Msg("starting web server")
