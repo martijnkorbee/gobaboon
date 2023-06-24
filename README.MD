@@ -11,9 +11,10 @@
 
 - [x] Update project structure
 - [ ] After creating a new project there should be no dependency on this repo:
-    - [ ] Move baboonapp template to this repo (generated project)
-    - [ ] Update the generated project structure
+    - [x] Move baboonapp template to this repo (generated project)
+    - [x] Update the generated project structure
     - [ ] Include baboon logic in the result (merge baboon.go and app.go as result)
+    - [ ] Check/Fix/Test bobo make commands
     - [ ] Release new project structure and result of creating a new project
 - [ ] Check/fix rpc issue #21
 - [ ] Revisit config loading and default values

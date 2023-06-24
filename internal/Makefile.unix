@@ -1,0 +1,12 @@
+APP_NAME=baboonapp
+
+build_app:
+	@echo "Building ${APP_NAME} in ./cmd/web/bin ..."
+	@go build -o ./cmd/web/bin/${APP_NAME} ./cmd/web
+	@echo "${APP_NAME} app has been built!"
+
+run: build_app
+	@cmd/web/bin/${APP_NAME}
+	
+start: 
+	@cmd/web/bin/${APP_NAME}

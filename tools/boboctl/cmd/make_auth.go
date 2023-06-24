@@ -14,7 +14,7 @@ var makeAuthCmd = &cobra.Command{
 	Use:   "auth",
 	Short: "Make table migrations for baboon auth",
 	Long: `Creates and runs up and down migrations for the baboon auth tables, and adds user and token models in data directory.
-Should be called from the root directory of a baboon app that has a valid .env file.
+Should be called from the root directory of a baboon web that has a valid .env file.
 
 NOTE: supported databases postgres, mysql/mariadb, sqlite
 `,

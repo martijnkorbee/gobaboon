@@ -24,19 +24,19 @@ type Baboon struct {
 	Config Config
 
 	// Log is the default logger for baboon
-	// Applications using baboon should assign their own loggers as in the skeleton app.
+	// Applications using baboon should assign their own loggers as in the skeleton web.
 	Log *logger.Logger
 
 	// Scheduler can be used to schedule tasks (like cron jobs)
 	Scheduler *cron.Cron
 
-	// Server is the baboon app server.
+	// Server is the baboon web server.
 	Server *server.Server
 
 	// RPCServer is baboon's RPC server
 	RPCServer *rpc.RPCServer
 
-	// Mailer is the baboon app mailer
+	// Mailer is the baboon web mailer
 	Mailer *mail.Mailer
 
 	// Database holds baboon's main database
@@ -46,7 +46,7 @@ type Baboon struct {
 	Cache cache.Cache
 }
 
-// New creates a new baboon app
+// New creates a new baboon web
 func (b *Baboon) Init(c Config) error {
 	// set config
 	b.Config = c
