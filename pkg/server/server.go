@@ -7,11 +7,11 @@ package server
 import (
 	"errors"
 	"fmt"
+	"github.com/martijnkorbee/gobaboon/pkg/render"
 	"net/http"
 	"time"
 
 	"github.com/go-chi/chi/v5"
-	"github.com/martijnkorbee/gobaboon/internal/pkg/render"
 	"github.com/martijnkorbee/gobaboon/pkg/logger"
 )
 

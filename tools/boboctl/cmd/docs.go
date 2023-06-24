@@ -4,7 +4,7 @@ import (
 	"log"
 	"os"
 
-	"github.com/martijnkorbee/gobaboon/cmd/cli/internal/pkg/util"
+	"github.com/martijnkorbee/gobaboon/cmd/boboctl/internal/pkg/util"
 	"github.com/spf13/cobra"
 	"github.com/spf13/cobra/doc"
 )
@@ -19,7 +19,7 @@ var docsCmd = &cobra.Command{
 			util.PrintError("failed to get rootpath", err)
 		}
 
-		err = doc.GenMarkdownTree(rootCmd, rootpath+"/cmd/cli/docs")
+		err = doc.GenMarkdownTree(rootCmd, rootpath+"/cmd/boboctl/docs")
 		if err != nil {
 			log.Fatal(err)
 		}

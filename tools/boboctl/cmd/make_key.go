@@ -1,7 +1,7 @@
 package cmd
 
 import (
-	"github.com/martijnkorbee/gobaboon/cmd/cli/internal/pkg/util"
+	"github.com/martijnkorbee/gobaboon/cmd/boboctl/internal/pkg/util"
 	butil "github.com/martijnkorbee/gobaboon/pkg/util"
 	"github.com/spf13/cobra"
 )
