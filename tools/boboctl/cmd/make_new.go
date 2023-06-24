@@ -3,22 +3,22 @@ package cmd
 import (
 	"errors"
 	"fmt"
+	"github.com/go-git/go-git/v5"
+	"github.com/martijnkorbee/gobaboon/tools/boboctl/internal/util"
 	"os"
 	"os/exec"
 	"path/filepath"
 	"strings"
 
 	"github.com/fatih/color"
-	"github.com/go-git/go-git/v5"
-	"github.com/martijnkorbee/gobaboon/cmd/boboctl/internal/pkg/util"
 	butil "github.com/martijnkorbee/gobaboon/pkg/util"
 	"github.com/spf13/cobra"
 )
 
 var makeNewCmd = &cobra.Command{
 	Use:   "new",
-	Short: "Make a new baboon app",
-	Long:  "Make a new baboon app.",
+	Short: "Make a new baboon web",
+	Long:  "Make a new baboon web.",
 	Run: func(cmd *cobra.Command, args []string) {
 		var (
 			appName = strings.ToLower(makeNewName)
@@ -30,24 +30,24 @@ var makeNewCmd = &cobra.Command{
 			appName = exploded[len(exploded)-1]
 		}
 
-		// git clone the skeleton application
+		// clone the skeleton application
 		mustCloneSkeleton(appName)
 
 		// create a ready to go .env file
 		mustCreateDotEnv(appName)
 
-		// update the go.mod file
-		mustUpdateGoModFile(appName)
+		//// update the go.mod file
+		//mustUpdateGoModFile(appName)
 
 		// change to new project dir
 		err := os.Chdir("./" + appName)
 		if err != nil {
-			util.PrintFatal("failed to cd to app directory", errors.New("couldn't cd in app directory"))
+			util.PrintFatal("failed to cd to web directory", errors.New("couldn't cd in web directory"))
 		}
 
-		// check if not exist create expected folders for a new baboon app
+		// check if not exist create expected folders for a new baboon web
 		fnames := []string{
-			"cmd/web/app",
+			"cmd/web/web",
 			"cmd/web/bin",
 			"http/handlers",
 			"http/middleware",
@@ -86,23 +86,23 @@ var makeNewCmd = &cobra.Command{
 		// update makefile
 		mustCreateMakeFile(appName)
 
-		util.PrintSuccess(fmt.Sprint("done creating new baboonapp:", appName))
+		util.PrintSuccess(fmt.Sprint("done creating new web:", appName))
 
 		color.Yellow("\tBuilding: %s", appName)
 		command = exec.Command("make", "build_app")
 		output, err = command.CombinedOutput()
 		if err != nil {
 			color.Red(fmt.Sprint(err) + ": " + string(output))
-			util.PrintFatal("failed to build app", err)
+			util.PrintFatal("failed to build web", err)
 		}
 		util.PrintInfo(fmt.Sprint(string(output)))
 
-		util.PrintSuccess(fmt.Sprintf("Start your app from dir %s and run: /cmd/web/bin/%s", appName, appName))
+		util.PrintSuccess(fmt.Sprintf("Start your web from dir %s and run: /cmd/web/bin/%s", appName, appName))
 	},
 }
 
 func init() {
-	makeNewCmd.Flags().StringVarP(&makeNewName, "name", "n", "", "sets the name of the new app")
+	makeNewCmd.Flags().StringVarP(&makeNewName, "name", "n", "", "sets the name of the new web")
 	makeNewCmd.MarkFlagRequired("name")
 }
 
@@ -133,12 +133,12 @@ func mustCloneSkeleton(appName string) {
 	color.Yellow("\tCloning git repository...")
 
 	_, err := git.PlainClone("./"+appName, false, &git.CloneOptions{
-		URL:      "https://github.com/martijnkorbee/baboonapp.git",
+		URL:      "https://github.com/martijnkorbee/gobaboon.git",
 		Progress: os.Stdout,
 		Depth:    1,
 	})
 	if err != nil {
-		util.PrintFatal("failed to clone skeleton app", err)
+		util.PrintFatal("failed to clone skeleton web", err)
 	}
 
 	// remove .git directory
@@ -151,15 +151,17 @@ func mustCloneSkeleton(appName string) {
 func mustUpdateGoModFile(appName string) {
 	color.Yellow("\tCreating go.mod file...")
 
-	_ = os.Remove("./" + appName + "/go.mod")
+	//_ = os.Remove("./" + appName + "/go.mod")
+	//
+	//data, err := templateFS.ReadFile("templates/go.mod.txt")
+	//if err != nil {
+	//	util.PrintFatal("failed to read go mod template", err)
+	//}
 
-	data, err := templateFS.ReadFile("templates/go.mod.txt")
-	if err != nil {
-		util.PrintFatal("failed to read go mod template", err)
-	}
+	data, err := os.ReadFile(fmt.Sprintf("./%s/go.mod", appName))
 
 	mod := string(data)
-	mod = strings.ReplaceAll(mod, "${APP_NAME}", makeNewName)
+	mod = strings.ReplaceAll(mod, "github.com/martijnkorbee/gobaboon", makeNewName)
 
 	err = os.WriteFile(fmt.Sprintf("./%s/go.mod", appName), []byte(mod), 0644)
 	if err != nil {
@@ -199,8 +201,8 @@ func updateSoureFile(path string, fi os.FileInfo, err error) error {
 			return err
 		}
 
-		// replace placeholder app name and write new file
-		updated := strings.ReplaceAll(string(read), "baboonapp", makeNewName)
+		// replace placeholder web name and write new file
+		updated := strings.ReplaceAll(string(read), "web", makeNewName)
 
 		err = os.WriteFile(path, []byte(updated), 0644)
 		if err != nil {

@@ -2,10 +2,10 @@ package cmd
 
 import (
 	"embed"
+	"github.com/martijnkorbee/gobaboon/tools/boboctl/internal/util"
 	"os"
 
 	"github.com/joho/godotenv"
-	"github.com/martijnkorbee/gobaboon/cmd/boboctl/internal/pkg/util"
 	"github.com/spf13/cobra"
 )
 

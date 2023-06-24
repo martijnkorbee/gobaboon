@@ -14,7 +14,7 @@ var makeSessionCmd = &cobra.Command{
 	Use:   "session",
 	Short: "Make table migrations for baboon sessions",
 	Long: `Creates and runs up and down migrations for the baboon server's persistent sessions.
-Should be called from the root directory of a baboon app that has a valid .env file.
+Should be called from the root directory of a baboon web that has a valid .env file.
 
 NOTE: supported databases postgres, mysql/mariadb, sqlite
 `,

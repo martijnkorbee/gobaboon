@@ -14,8 +14,8 @@ var (
 
 var rpcCmd = &cobra.Command{
 	Use:       "rpc",
-	Short:     "Used to make rpc calls to the baboon app",
-	Long:      "Used to make rpc calls to the baboon app.",
+	Short:     "Used to make rpc calls to the baboon web",
+	Long:      "Used to make rpc calls to the baboon web.",
 	Args:      cobra.MatchAll(cobra.MinimumNArgs(1), cobra.OnlyValidArgs),
 	ValidArgs: []string{"maintenance"},
 }
