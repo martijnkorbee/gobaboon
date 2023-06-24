@@ -4,13 +4,13 @@ import (
 	"database/sql"
 	"errors"
 	"fmt"
+	cache2 "github.com/martijnkorbee/gobaboon/internal/cache"
+	"github.com/martijnkorbee/gobaboon/internal/rpc"
+	server2 "github.com/martijnkorbee/gobaboon/internal/server"
 	"net/http"
 
 	"github.com/dgraph-io/badger"
 	"github.com/gomodule/redigo/redis"
-	"github.com/martijnkorbee/gobaboon/internal/pkg/cache"
-	"github.com/martijnkorbee/gobaboon/internal/pkg/rpc"
-	"github.com/martijnkorbee/gobaboon/internal/pkg/server"
 	"github.com/martijnkorbee/gobaboon/pkg/db"
 	"github.com/martijnkorbee/gobaboon/pkg/logger"
 	"github.com/martijnkorbee/gobaboon/pkg/mail"
@@ -31,7 +31,7 @@ type Baboon struct {
 	Scheduler *cron.Cron
 
 	// Server is the baboon app server.
-	Server *server.Server
+	Server *server2.Server
 
 	// RPCServer is baboon's RPC server
 	RPCServer *rpc.RPCServer
@@ -43,7 +43,7 @@ type Baboon struct {
 	Database *db.Database
 
 	// Cache is baboon's cache client
-	Cache cache.Cache
+	Cache cache2.Cache
 }
 
 // New creates a new baboon app
@@ -82,7 +82,7 @@ func (b *Baboon) Init(c Config) error {
 	}
 
 	// create a new server
-	if srv, err := server.NewServer(parseServerConfig(b.Config)); err != nil {
+	if srv, err := server2.NewServer(parseServerConfig(b.Config)); err != nil {
 		return err
 	} else {
 		b.Server = srv
@@ -156,14 +156,14 @@ func (b *Baboon) Run() error {
 }
 
 // parseServerConfig helps to extract baboon configation variables into a server configuration
-func parseServerConfig(c Config) server.ServerConfig {
-	return server.ServerConfig{
+func parseServerConfig(c Config) server2.ServerConfig {
+	return server2.ServerConfig{
 		Rootpath: c.Rootpath,
 		Host:     c.Host,
 		Port:     c.Port,
 		Renderer: c.Renderer,
 		Debug:    c.Debug,
-		Cookie: server.CookieConfig{
+		Cookie: server2.CookieConfig{
 			Name:     c.Cookie.Name,
 			Domain:   c.Cookie.Domain,
 			LifeTime: c.Cookie.LifeTime,
@@ -219,10 +219,10 @@ func (b *Baboon) mustConnectToDB() *db.Database {
 }
 
 // mustConnectToCache must connect to cache
-func (b *Baboon) mustConnectToCache() cache.Cache {
+func (b *Baboon) mustConnectToCache() cache2.Cache {
 	switch b.Config.CacheType {
 	case "redis":
-		client, err := cache.CreateRedisCache(cache.RedisConfig{
+		client, err := cache2.CreateRedisCache(cache2.RedisConfig{
 			Prefix:   b.Config.CachePrefix,
 			Host:     b.Config.Redis.Host,
 			Port:     b.Config.Redis.Port,
@@ -234,7 +234,7 @@ func (b *Baboon) mustConnectToCache() cache.Cache {
 		// assign redis client
 		return client
 	case "badger":
-		client, err := cache.CreateBadgerCache(cache.BadgerConfig{
+		client, err := cache2.CreateBadgerCache(cache2.BadgerConfig{
 			Prefix: b.Config.CachePrefix,
 			Path:   b.Config.Rootpath + "/database/data/badger",
 		}, b.Log)

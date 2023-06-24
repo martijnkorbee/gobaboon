@@ -10,7 +10,7 @@ import (
 
 	"github.com/fatih/color"
 	"github.com/go-git/go-git/v5"
-	"github.com/martijnkorbee/gobaboon/cmd/cli/internal/pkg/util"
+	"github.com/martijnkorbee/gobaboon/cmd/boboctl/internal/pkg/util"
 	butil "github.com/martijnkorbee/gobaboon/pkg/util"
 	"github.com/spf13/cobra"
 )

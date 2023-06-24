@@ -2,10 +2,9 @@ package rpc
 
 import (
 	"fmt"
+	"github.com/martijnkorbee/gobaboon/internal/server"
 	"net"
 	"net/rpc"
-
-	"github.com/martijnkorbee/gobaboon/internal/pkg/server"
 )
 
 type RPCServer struct {

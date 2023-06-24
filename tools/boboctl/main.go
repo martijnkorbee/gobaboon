@@ -2,7 +2,7 @@
 package main
 
 import (
-	"github.com/martijnkorbee/gobaboon/cmd/cli/bobo/cmd"
+	"github.com/martijnkorbee/gobaboon/tools/boboctl/cmd"
 )
 
 func main() {

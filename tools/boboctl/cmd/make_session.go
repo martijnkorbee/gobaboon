@@ -6,7 +6,7 @@ import (
 	"os"
 	"time"
 
-	"github.com/martijnkorbee/gobaboon/cmd/cli/internal/pkg/util"
+	"github.com/martijnkorbee/gobaboon/cmd/boboctl/internal/pkg/util"
 	"github.com/spf13/cobra"
 )
 
