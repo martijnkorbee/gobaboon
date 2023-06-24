@@ -9,7 +9,7 @@
 <div>
   <p>At the moment of writing I am working on this project to include the things I've learned after building and deploying a REST API made on top of Baboon.</p>
 
-- [ ] Update project structure
+- [x] Update project structure
 - [ ] After creating a new project there should be no dependency on this repo:
     - [ ] Move baboonapp template to this repo (generated project)
     - [ ] Update the generated project structure
