@@ -2,7 +2,7 @@ package rpc
 
 import (
 	"fmt"
-	"github.com/martijnkorbee/gobaboon/internal/server"
+	"github.com/martijnkorbee/gobaboon/pkg/server"
 	"net"
 	"net/rpc"
 )

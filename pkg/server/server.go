@@ -7,7 +7,7 @@ package server
 import (
 	"errors"
 	"fmt"
-	"github.com/martijnkorbee/gobaboon/internal/render"
+	"github.com/martijnkorbee/gobaboon/pkg/render"
 	"net/http"
 	"time"
 

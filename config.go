@@ -1,7 +1,7 @@
 package gobaboon
 
 import (
-	"github.com/martijnkorbee/gobaboon/internal/cache"
+	"github.com/martijnkorbee/gobaboon/pkg/cache"
 	"net/http"
 
 	"github.com/martijnkorbee/gobaboon/pkg/db"
