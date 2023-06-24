@@ -3,8 +3,21 @@
 </div>
 
 <div>
-  <p align="left">Baboon aims to kickstart the development of go web and api applications by laying out a project structure and doing the scafolding for tasks that could be seen as repetitive in various projects.</p>
-  <p>At the moment of writing I am using Baboon for a (real-world) REST API.</p>
+  <p align="left">Baboon aims to kickstart the development of go web and api projects by laying out a project structure and doing the scaffolding for tasks that could be seen as repetitive in various projects.</p>
+</div>
+
+<div>
+  <p>At the moment of writing I am working on this project to include the things I've learned after building and deploying a REST API made on top of Baboon.</p>
+
+- [ ] Update project structure
+- [ ] After creating a new project there should be no dependency on this repo:
+  - [ ] Update the generated project structure
+  - [ ] Include baboon logic in the result
+  - [ ] Release new project structure and result of creating a new project
+- [ ] Check/fix rpc issue #21
+- [ ] Revisit config loading and default values
+- [ ] Revisit logger pkg (include new slog from 1.21?)
+
 </div>
 
 <div>
