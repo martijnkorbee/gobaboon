@@ -16,7 +16,7 @@ See each sub-command's help for details on how to use the generated script.
 
 ### SEE ALSO
 
-* [baboonctl](../../README.md/baboonctl.md)	 - Baboonctl is a quality of life improvement for building web apps and services.
+* [baboonctl](../README.md)	 - Baboonctl is a quality of life improvement for building web apps and services.
 * [baboonctl completion bash](baboonctl_completion_bash.md)	 - Generate the autocompletion script for bash
 * [baboonctl completion fish](baboonctl_completion_fish.md)	 - Generate the autocompletion script for fish
 * [baboonctl completion powershell](baboonctl_completion_powershell.md)	 - Generate the autocompletion script for powershell
