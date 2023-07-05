@@ -13,7 +13,7 @@ var (
 var makeCmd = &cobra.Command{
 	Use:       "make",
 	Short:     "Make all kinds of things",
-	Long:      "Make all kinds of things with the Bobo boboctl.",
+	Long:      "Make all kinds of things with the baboonctl.",
 	Args:      cobra.MatchAll(cobra.ExactArgs(1), cobra.OnlyValidArgs),
 	ValidArgs: []string{"key", "session", "auth", "model"},
 }

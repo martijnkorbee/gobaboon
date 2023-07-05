@@ -4,7 +4,7 @@ import (
 	"errors"
 	"fmt"
 	"github.com/go-git/go-git/v5"
-	"github.com/martijnkorbee/gobaboon/tools/boboctl/internal/util"
+	"github.com/martijnkorbee/gobaboon/tools/baboonctl/internal/util"
 	"os"
 	"os/exec"
 	"path/filepath"

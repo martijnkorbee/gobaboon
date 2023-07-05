@@ -2,7 +2,7 @@ package cmd
 
 import (
 	"embed"
-	"github.com/martijnkorbee/gobaboon/tools/boboctl/internal/util"
+	"github.com/martijnkorbee/gobaboon/tools/baboonctl/internal/util"
 	"os"
 
 	"github.com/joho/godotenv"
@@ -22,9 +22,9 @@ var (
 )
 
 var rootCmd = &cobra.Command{
-	Use:   "bobo",
-	Short: "Bobo is a quality of life improvement for building web apps and services.",
-	Long:  `Bobo is a convenient tool to bootstrap your web apps and services. Write your first routes within 10 min.`,
+	Use:   "baboonctl",
+	Short: "Baboonctl is a quality of life improvement for building web apps and services.",
+	Long:  `Baboonctl is a convenient tool to bootstrap your web apps and services. Write your first routes within 10 min.`,
 	Run: func(cmd *cobra.Command, args []string) {
 		util.PrintWarning("no command specified, use bobo help")
 	},
