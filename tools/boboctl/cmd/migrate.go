@@ -10,7 +10,7 @@ import (
 	_ "github.com/golang-migrate/migrate/v4/database/postgres"
 	_ "github.com/golang-migrate/migrate/v4/database/sqlite3"
 	_ "github.com/golang-migrate/migrate/v4/source/file"
-	"github.com/martijnkorbee/gobaboon/cmd/boboctl/internal/pkg/util"
+	"github.com/martijnkorbee/gobaboon/tools/boboctl/internal/util"
 	"github.com/spf13/cobra"
 )
 

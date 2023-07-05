@@ -9,7 +9,7 @@ import (
 
 	"github.com/gertd/go-pluralize"
 	"github.com/iancoleman/strcase"
-	"github.com/martijnkorbee/gobaboon/cmd/boboctl/internal/pkg/util"
+	"github.com/martijnkorbee/gobaboon/tools/boboctl/internal/util"
 	"github.com/spf13/cobra"
 )
 

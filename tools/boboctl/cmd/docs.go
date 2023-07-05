@@ -4,7 +4,7 @@ import (
 	"log"
 	"os"
 
-	"github.com/martijnkorbee/gobaboon/cmd/boboctl/internal/pkg/util"
+	"github.com/martijnkorbee/gobaboon/tools/boboctl/internal/util"
 	"github.com/spf13/cobra"
 	"github.com/spf13/cobra/doc"
 )

@@ -1,11 +1,11 @@
 build_bobo:
-	@echo "Building bobo cli at ./cmd/cli/bobo/bin ..."
-	@go build -o ./bin/bobo ./cmd/cli/bobo
+	@echo "Building boboctl at ./bin/boboctl ..."
+	@go build -o ./bin/boboctl ./tools/boboctl
 	@echo "Bobo has been built!"
 
 install_bobo:
 	@echo "Installing bobo in ${HOME}/go/bin ..."
-	@go install ./cmd/cli/bobo
+	@go install ./tools/boboctl
 	@echo "Bobo has been installed!"
 
 pre-build_bobo:
