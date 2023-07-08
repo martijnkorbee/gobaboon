@@ -24,19 +24,19 @@ type Baboon struct {
 	Config Config
 
 	// Log is the default logger for baboon
-	// Applications using baboon should assign their own loggers as in the skeleton web.
+	// Applications using baboon should assign their own loggers as in the skeleton app.
 	Log *logger.Logger
 
 	// Scheduler can be used to schedule tasks (like cron jobs)
 	Scheduler *cron.Cron
 
-	// Server is the baboon web server.
+	// Server is the baboon app server.
 	Server *server.Server
 
 	// RPCServer is baboon's RPC server
 	RPCServer *rpc.RPCServer
 
-	// Mailer is the baboon web mailer
+	// Mailer is the baboon app mailer
 	Mailer *mail.Mailer
 
 	// Database holds baboon's main database
@@ -46,7 +46,7 @@ type Baboon struct {
 	Cache cache.Cache
 }
 
-// New creates a new baboon web
+// New creates a new baboon app
 func (b *Baboon) Init(c Config) error {
 	// set config
 	b.Config = c
@@ -146,10 +146,10 @@ func (b *Baboon) Run() error {
 	//b.Log.Info().Str("port", b.RPCServer.Port).Msg("starting RPC server")
 	//go b.RPCServer.Run()
 
-	// start web server
-	b.Log.Info().Str("port", b.Config.Port).Msg("starting web server")
+	// start app server
+	b.Log.Info().Str("port", b.Config.Port).Msg("starting app server")
 	if err := b.Server.Run(); err != nil {
-		b.Log.Fatal().Err(err).Msg("failed to start web server")
+		b.Log.Fatal().Err(err).Msg("failed to start app server")
 	}
 
 	return nil

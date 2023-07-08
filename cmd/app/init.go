@@ -1,4 +1,4 @@
-package web
+package app
 
 import (
 	"github.com/martijnkorbee/gobaboon/internal/database/models"
@@ -76,7 +76,7 @@ func MustInitApplication() *application {
 	}
 
 	// mount application routes
-	app.Baboon.Server.Router.Mount("/", app.Routes.Routes())       // web routes
+	app.Baboon.Server.Router.Mount("/", app.Routes.Routes())       // app routes
 	app.Baboon.Server.Router.Mount("/api", app.Routes.RoutesAPI()) // API routes
 
 	return app

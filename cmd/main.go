@@ -1,10 +1,10 @@
 package main
 
 import (
-	"baboonapp/cmd/web/app"
+	"github.com/martijnkorbee/gobaboon/cmd/app"
 )
 
 func main() {
-	app := app.MustInitApplication()
-	app.Start()
+	application := app.MustInitApplication()
+	application.Start()
 }

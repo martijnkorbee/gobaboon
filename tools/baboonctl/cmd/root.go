@@ -23,8 +23,8 @@ var (
 
 var rootCmd = &cobra.Command{
 	Use:   "baboonctl",
-	Short: "Baboonctl is a quality of life improvement for building web apps and services.",
-	Long:  `Baboonctl is a convenient tool to bootstrap your web apps and services. Write your first routes within 10 min.`,
+	Short: "Baboonctl is a quality of life improvement for building app apps and services.",
+	Long:  `Baboonctl is a convenient tool to bootstrap your app apps and services. Write your first routes within 10 min.`,
 	Run: func(cmd *cobra.Command, args []string) {
 		util.PrintWarning("no command specified, use bobo help")
 	},

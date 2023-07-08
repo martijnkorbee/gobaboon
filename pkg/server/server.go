@@ -30,7 +30,7 @@ type Server struct {
 	// Session holds the server's sessionmanager
 	Session *Session
 
-	// Renderer is used to render html pages for web routes
+	// Renderer is used to render html pages for app routes
 	Renderer *render.Renderer
 
 	// Middleware holds the default middleware added to a baboon server
