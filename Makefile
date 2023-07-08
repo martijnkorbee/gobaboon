@@ -17,5 +17,9 @@ app_run: app_build
 	@echo "Starting application"
 	@./bin/app
 
+app_start:
+	@echo "Starting application"
+	@./bin/app
+
 #pre-build_baboonctl:
 #	@./build-assets.sh

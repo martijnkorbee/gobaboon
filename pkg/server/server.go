@@ -89,13 +89,10 @@ func NewServer(sc ServerConfig) (*Server, error) {
 
 	// create logger
 	log := &logger.LoggerConfig{
-		Rootpath:   srv.config.Rootpath,
-		Debug:      srv.config.Debug,
-		Console:    srv.config.Debug,
-		ToFile:     !srv.config.Debug,
-		Service:    "baboon-server",
-		Filename:   "/logs/baboon_server.log",
-		MaxBackups: 2,
+		Rootpath: srv.config.Rootpath,
+		Debug:    srv.config.Debug,
+		Console:  true,
+		Service:  "webserver",
 	}
 	// start logger
 	srv.Log = log.Start()

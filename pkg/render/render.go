@@ -32,7 +32,6 @@ type TemplateData struct {
 
 // createRenderer
 func New(rootpath, engine string, debug bool) *Renderer {
-
 	return &Renderer{
 		rootpath:       rootpath,
 		templateEngine: engine,
@@ -64,7 +63,7 @@ func (r *Renderer) Page(w http.ResponseWriter, req *http.Request, view string, v
 
 // GoPage renders a template using the GO templating engine.
 func (r *Renderer) GoPage(w http.ResponseWriter, req *http.Request, view string, data interface{}) error {
-	tmpl, err := template.ParseFiles(r.rootpath + "/templates/views/" + view + ".page.tmpl")
+	tmpl, err := template.ParseFiles(r.rootpath + "/app/templates/views/" + view + ".page.tmpl")
 	if err != nil {
 		return err
 	}
@@ -102,12 +101,12 @@ func (r *Renderer) JetPage(w http.ResponseWriter, req *http.Request, view string
 func makeJetSet(rootpath string, debug bool) *jet.Set {
 	if debug {
 		return jet.NewSet(
-			jet.NewOSFileSystemLoader(rootpath+"/templates/views/"),
+			jet.NewOSFileSystemLoader(rootpath+"/app/templates/views/"),
 			jet.InDevelopmentMode(),
 		)
 	}
 
 	return jet.NewSet(
-		jet.NewOSFileSystemLoader(rootpath + "/templates/views/"),
+		jet.NewOSFileSystemLoader(rootpath + "/app/templates/views/"),
 	)
 }
