@@ -4,16 +4,14 @@ import (
 	"database/sql"
 	"errors"
 	"fmt"
-	"github.com/martijnkorbee/gobaboon/pkg/cache"
-	"github.com/martijnkorbee/gobaboon/pkg/rpc"
-	"github.com/martijnkorbee/gobaboon/pkg/server"
-	"net/http"
-
 	"github.com/dgraph-io/badger"
 	"github.com/gomodule/redigo/redis"
+	"github.com/martijnkorbee/gobaboon/pkg/cache"
 	"github.com/martijnkorbee/gobaboon/pkg/db"
 	"github.com/martijnkorbee/gobaboon/pkg/logger"
 	"github.com/martijnkorbee/gobaboon/pkg/mail"
+	"github.com/martijnkorbee/gobaboon/pkg/rpc"
+	"github.com/martijnkorbee/gobaboon/pkg/server"
 	"github.com/robfig/cron/v3"
 )
 
@@ -24,19 +22,19 @@ type Baboon struct {
 	Config Config
 
 	// Log is the default logger for baboon
-	// Applications using baboon should assign their own loggers as in the skeleton web.
+	// Applications using baboon should assign their own loggers as in the skeleton app.
 	Log *logger.Logger
 
 	// Scheduler can be used to schedule tasks (like cron jobs)
 	Scheduler *cron.Cron
 
-	// Server is the baboon web server.
+	// Server is the baboon app server.
 	Server *server.Server
 
 	// RPCServer is baboon's RPC server
 	RPCServer *rpc.RPCServer
 
-	// Mailer is the baboon web mailer
+	// Mailer is the baboon app mailer
 	Mailer *mail.Mailer
 
 	// Database holds baboon's main database
@@ -46,7 +44,7 @@ type Baboon struct {
 	Cache cache.Cache
 }
 
-// New creates a new baboon web
+// New creates a new baboon app
 func (b *Baboon) Init(c Config) error {
 	// set config
 	b.Config = c
@@ -81,18 +79,13 @@ func (b *Baboon) Init(c Config) error {
 		b.Cache = b.mustConnectToCache()
 	}
 
-	// create a new server
-	if srv, err := server.NewServer(parseServerConfig(b.Config)); err != nil {
-		return err
-	} else {
-		b.Server = srv
-	}
-
 	// if session type is set to a persistent store
 	if b.Config.SessionType != "" && b.Config.SessionType != "cookie" {
 		switch b.Config.SessionType {
-		case "postgers", "postgresql", "sqlite", "mysql":
-			b.Server.Session.SetPersistentStoreDatabase(b.Database.Dialect, b.Database.Session.Driver().(*sql.DB))
+		case "postgress", "postgresql", "sqlite", "mysql":
+			if err := b.Server.Session.SetPersistentStoreDatabase(b.Database.Dialect, b.Database.Session.Driver().(*sql.DB)); err != nil {
+				//	do something
+			}
 		case "redis":
 			b.Server.Session.SetPersistentStoreRedis(b.Cache.GetConnection().(*redis.Pool))
 		case "badger":
@@ -104,74 +97,14 @@ func (b *Baboon) Init(c Config) error {
 
 	// create a new mailer
 	if b.Config.MailerService != "" {
-		if mail, err := mail.NewMailer(parseMailConfig(b.Config), b.Config.MailerService, b.Config.Rootpath+"/templates/mail"); err != nil {
+		if mailer, err := mail.NewMailer(parseMailConfig(b.Config), b.Config.MailerService, b.Config.Rootpath+"/templates/mail"); err != nil {
 			return err
 		} else {
-			b.Mailer = mail
+			b.Mailer = mailer
 		}
 	}
 
 	return nil
-}
-
-func (b *Baboon) Run() error {
-	// close database session when server terminates
-	if b.Config.DatabaseConfig.Dialect != "" {
-		defer b.Database.Session.Close()
-	}
-
-	// close cache connection when server terminates
-	if b.Config.CacheType != "" {
-		defer b.Cache.Close()
-	}
-
-	// add badger garbage collection to scheduler
-	if b.Config.CacheType == "badger" {
-		cid, err := b.Scheduler.AddFunc("@daily", func() { b.Cache.GetConnection().(*badger.DB).RunValueLogGC(0.7) })
-		if err != nil {
-			b.Log.Error().Err(err).Msg("failed to a GC for badger")
-		} else {
-			b.Log.Info().Str("cronEntryID", fmt.Sprint(cid)).Msg("added GC for badger to cron jobs")
-		}
-	}
-
-	// start mail listener
-	if b.Config.MailerService != "" {
-		b.Log.Info().Msg("starting mail channels")
-		go b.Mailer.ListenForMail()
-	}
-
-	// start RPC server
-	// TODO: disabled
-	//b.Log.Info().Str("port", b.RPCServer.Port).Msg("starting RPC server")
-	//go b.RPCServer.Run()
-
-	// start web server
-	b.Log.Info().Str("port", b.Config.Port).Msg("starting web server")
-	if err := b.Server.Run(); err != nil {
-		b.Log.Fatal().Err(err).Msg("failed to start web server")
-	}
-
-	return nil
-}
-
-// parseServerConfig helps to extract baboon configation variables into a server configuration
-func parseServerConfig(c Config) server.ServerConfig {
-	return server.ServerConfig{
-		Rootpath: c.Rootpath,
-		Host:     c.Host,
-		Port:     c.Port,
-		Renderer: c.Renderer,
-		Debug:    c.Debug,
-		Cookie: server.CookieConfig{
-			Name:     c.Cookie.Name,
-			Domain:   c.Cookie.Domain,
-			LifeTime: c.Cookie.LifeTime,
-			Persist:  c.Cookie.Persist,
-			Secure:   c.Cookie.Secure,
-			SameSite: http.SameSiteStrictMode,
-		},
-	}
 }
 
 func parseMailConfig(c Config) mail.MailerSettings {

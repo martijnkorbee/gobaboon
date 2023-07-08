@@ -1,18 +1,19 @@
 package handlers
 
 import (
+	"github.com/martijnkorbee/gobaboon/pkg/logger"
+	"github.com/martijnkorbee/gobaboon/pkg/server"
 	"net/http"
-
-	"github.com/martijnkorbee/gobaboon"
 )
 
 type Handlers struct {
-	App *gobaboon.Baboon
+	Log    *logger.Logger
+	Server *server.Server
 }
 
 func (h *Handlers) Home(w http.ResponseWriter, r *http.Request) {
-	err := h.App.Server.Renderer.Page(w, r, "home", nil, nil)
+	err := h.Server.Renderer.Page(w, r, "home", nil, nil)
 	if err != nil {
-		h.App.Log.Error().Err(err).Msg("error rendering")
+		h.Log.Error().Err(err).Msg("error rendering")
 	}
 }

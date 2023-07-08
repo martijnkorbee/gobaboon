@@ -1,8 +1,8 @@
 package routes
 
 import (
-	"baboonapp/http/handlers"
-	"baboonapp/http/middleware"
+	"github.com/martijnkorbee/gobaboon/internal/http/handlers"
+	"github.com/martijnkorbee/gobaboon/internal/http/middleware"
 	"net/http"
 
 	"github.com/go-chi/chi/v5"
@@ -23,7 +23,7 @@ func (ar *AppRoutes) Routes() *chi.Mux {
 	r.Get("/", ar.Handlers.Home) // default home route
 
 	// static routes
-	fileServer := http.FileServer(http.Dir("./public"))
+	fileServer := http.FileServer(http.Dir("./app/public"))
 	r.Handle("/public/*", http.StripPrefix("/public", fileServer))
 
 	return r

@@ -1,4 +1,4 @@
-package web
+package app
 
 import (
 	"fmt"
@@ -6,17 +6,20 @@ import (
 	"github.com/martijnkorbee/gobaboon/internal/http/handlers"
 	"github.com/martijnkorbee/gobaboon/internal/http/middleware"
 	"github.com/martijnkorbee/gobaboon/internal/http/routes"
+	"github.com/martijnkorbee/gobaboon/pkg/server"
 	"os"
 	"os/signal"
 	"sync"
 	"syscall"
 
-	"github.com/martijnkorbee/gobaboon"
 	"github.com/martijnkorbee/gobaboon/pkg/logger"
 )
 
-type application struct {
-	Baboon     *gobaboon.Baboon
+type Application struct {
+	Config Config
+	Server *server.Server
+	// TODO: add db
+	//Database   *db.Database
 	Log        *logger.Logger
 	Middleware *middleware.Middleware
 	Handlers   *handlers.Handlers
@@ -25,8 +28,8 @@ type application struct {
 	WG         sync.WaitGroup
 }
 
-// Starts starts the application
-func (a *application) Start() {
+// Start starts the Application
+func (a *Application) Start() {
 	// add your things to do before starting here
 
 	// spawn shutdown listener
@@ -34,13 +37,13 @@ func (a *application) Start() {
 
 	// start baboon
 	a.Log.Info().Msg("starting baboon")
-	if err := a.Baboon.Run(); err != nil {
+	if err := a.Run(); err != nil {
 		a.Log.Fatal().Err(err).Msg("failed to start baboon")
 	}
 }
 
 // listenForShutDown captures shutdown signals and initiates shutdown process
-func (a *application) listenForShutdown() {
+func (a *Application) listenForShutdown() {
 	quit := make(chan os.Signal, 1)
 	signal.Notify(quit, syscall.SIGINT, syscall.SIGTERM)
 	s := <-quit
@@ -51,13 +54,13 @@ func (a *application) listenForShutdown() {
 	a.shutdown()
 }
 
-// shutdown gracefully shuts down the application
-func (a *application) shutdown() {
+// shutdown gracefully shuts down the Application
+func (a *Application) shutdown() {
 	// put any clean up tasks here
 
-	// block untill the wait group is empty
+	// block until the wait group is empty
 	a.WG.Wait()
 
-	// exit application
+	// exit Application
 	os.Exit(0)
 }

@@ -30,7 +30,7 @@ type Server struct {
 	// Session holds the server's sessionmanager
 	Session *Session
 
-	// Renderer is used to render html pages for web routes
+	// Renderer is used to render html pages for app routes
 	Renderer *render.Renderer
 
 	// Middleware holds the default middleware added to a baboon server
@@ -89,13 +89,10 @@ func NewServer(sc ServerConfig) (*Server, error) {
 
 	// create logger
 	log := &logger.LoggerConfig{
-		Rootpath:   srv.config.Rootpath,
-		Debug:      srv.config.Debug,
-		Console:    srv.config.Debug,
-		ToFile:     !srv.config.Debug,
-		Service:    "baboon-server",
-		Filename:   "/logs/baboon_server.log",
-		MaxBackups: 2,
+		Rootpath: srv.config.Rootpath,
+		Debug:    srv.config.Debug,
+		Console:  true,
+		Service:  "webserver",
 	}
 	// start logger
 	srv.Log = log.Start()

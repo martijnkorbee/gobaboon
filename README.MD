@@ -13,7 +13,8 @@
 - [ ] After creating a new project there should be no dependency on this repo:
     - [x] Move baboonapp template to this repo (generated project)
     - [x] Update the generated project structure
-    - [ ] Include baboon logic in the result (merge baboon.go and app.go as result)
+    - [x] Include baboon logic in the result (merge baboon.go and app.go as result)
+    - [ ] Expand application struct with pkgs
     - [ ] Check/Fix/Test bobo make commands
     - [ ] Release new project structure and result of creating a new project
 - [ ] Check/fix rpc issue #21
@@ -50,7 +51,7 @@
 </div>
 
 ## GOTO
-* [Bobo-cli](#bobo-cli)
+* [baboonctl](#baboonctl)
 * [Getting started](#getting-started)
 * [Project structure](#project-structure)
 * [Authentication](#authentication) 
@@ -58,8 +59,8 @@
 * [Middleware](#middleware)
 * [Routes and handlers](#routes-and-handlers)
 
-## Bobo-cli
-Refer to the full documentation: [bobo-cli docs](https://github.com/martijnkorbee/gobaboon/tree/master/cmd/cli/bobo)
+## baboonctl
+Refer to the full documentation: [docs](https://github.com/martijnkorbee/gobaboon/tree/master/tools/baboonctl)
 
 ## Getting started
 Clone the repo.
