@@ -1,12 +1,11 @@
 package middleware
 
 import (
-	"baboonapp/database/models"
+	//"baboonapp/database/models"
 
-	"github.com/martijnkorbee/gobaboon"
+	"github.com/martijnkorbee/gobaboon/internal/database/models"
 )
 
 type Middleware struct {
-	App    *gobaboon.Baboon
 	Models *models.Models
 }

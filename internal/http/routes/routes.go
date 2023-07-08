@@ -1,8 +1,8 @@
 package routes
 
 import (
-	"baboonapp/http/handlers"
-	"baboonapp/http/middleware"
+	"github.com/martijnkorbee/gobaboon/internal/http/handlers"
+	"github.com/martijnkorbee/gobaboon/internal/http/middleware"
 	"net/http"
 
 	"github.com/go-chi/chi/v5"
