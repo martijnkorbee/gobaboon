@@ -14,8 +14,9 @@ func (ar *AppRoutes) RoutesAPI() *chi.Mux {
 	r.Get("/ping", ar.Handlers.Ping) // default route
 
 	// users
-	r.Route("/users", func(r chi.Router) {
+	r.Route("/users/{email}", func(r chi.Router) {
 		r.MethodFunc("POST", "/", ar.Handlers.UsersAdd)
+		r.MethodFunc("DELETE", "/", ar.Handlers.UsersDelete)
 	})
 
 	r.Route("/v1", func(r chi.Router) {

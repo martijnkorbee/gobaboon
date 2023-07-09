@@ -27,15 +27,15 @@ SUPPORTED DATABASES: postgres, mysql/mariadb, sqlite
 
 			// models
 			tokenSource = "templates/models/token.go.txt"
-			tokenTarget = rootPath + "/internal/database/models/token.go.txt"
 			usersSource = "templates/models/user.go.txt"
-			usersTarget = rootPath + "/internal/database/models/user.go.txt"
+			tokenTarget = rootPath + "/internal/database/models/token.go"
+			usersTarget = rootPath + "/internal/database/models/user.go"
 
 			// middleware
-			authTokenSource = "templates/middleware/auth-token.go.txt.txt"
-			authUsersSource = "templates/middleware/auth-user.go.txt.txt"
-			authTokenTarget = rootPath + "/internal/http/middleware/auth-token.go.txt.txt"
-			authUsersTarget = rootPath + "/internal/http/middleware/auth-user.go.txt.txt"
+			authTokenSource = "templates/middleware/auth-token.go.txt"
+			authUsersSource = "templates/middleware/auth-user.go.txt"
+			authTokenTarget = rootPath + "/internal/http/middleware/auth-token.go"
+			authUsersTarget = rootPath + "/internal/http/middleware/auth-user.go"
 		)
 
 		// create database migrations

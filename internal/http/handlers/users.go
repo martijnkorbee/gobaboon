@@ -1,7 +1,7 @@
 package handlers
 
 import (
-	"fmt"
+	"github.com/go-chi/chi/v5"
 	"github.com/martijnkorbee/gobaboon/internal/database/models"
 	"github.com/martijnkorbee/gobaboon/pkg/util"
 	"net/http"
@@ -21,12 +21,12 @@ func (h *Handlers) UsersAdd(w http.ResponseWriter, req *http.Request) {
 		return
 	}
 
-	fmt.Print(user)
-
 	id, err := h.Models.Users.AddUser(user)
 	if err != nil {
 		h.Log.Error().Err(err).Msg("error adding user")
-		http.Error(w, http.StatusText(http.StatusInternalServerError), http.StatusInternalServerError)
+		_ = util.WriteJSON(w, http.StatusBadRequest, map[string]string{
+			"error": err.Error(),
+		})
 		return
 	}
 
@@ -53,6 +53,44 @@ func (h *Handlers) UsersAdd(w http.ResponseWriter, req *http.Request) {
 
 	_ = util.WriteJSON(w, http.StatusOK, map[string]string{
 		"email": user.Email,
-		"token": user.Token.PlainText,
+		"token": token.PlainText,
+	})
+}
+
+func (h *Handlers) UsersDelete(w http.ResponseWriter, req *http.Request) {
+	user := models.User{
+		Active: 1,
+	}
+
+	email := chi.URLParam(req, "email")
+
+	usr, err := h.Models.Users.GetUserByEmail(email)
+	if err != nil {
+		h.Log.Error().Err(err).Msg("error retrieving user")
+		_ = util.WriteJSON(w, http.StatusBadRequest, map[string]string{
+			"error": err.Error(),
+		})
+		return
+	}
+
+	err = h.Models.Users.DeleteUser(usr.ID)
+	if err != nil {
+		h.Log.Error().Err(err).Msg("error deleting user")
+		http.Error(w, http.StatusText(http.StatusInternalServerError), http.StatusInternalServerError)
+		return
+	}
+
+	// delete all tokens for user
+	for {
+		tkn, err := h.Models.Tokens.GetTokenByEmail(user.Email)
+		if err != nil {
+			break
+		}
+		_ = h.Models.Tokens.DeleteTokenByID(tkn.ID)
+	}
+
+	_ = util.WriteJSON(w, http.StatusOK, map[string]string{
+		"action": "delete",
+		"user":   user.Email,
 	})
 }
