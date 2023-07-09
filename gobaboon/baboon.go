@@ -9,7 +9,6 @@ import (
 	"github.com/martijnkorbee/gobaboon/pkg/cache"
 	"github.com/martijnkorbee/gobaboon/pkg/db"
 	"github.com/martijnkorbee/gobaboon/pkg/logger"
-	"github.com/martijnkorbee/gobaboon/pkg/mail"
 	"github.com/martijnkorbee/gobaboon/pkg/rpc"
 	"github.com/martijnkorbee/gobaboon/pkg/server"
 	"github.com/robfig/cron/v3"
@@ -33,9 +32,6 @@ type Baboon struct {
 
 	// RPCServer is baboon's RPC server
 	RPCServer *rpc.RPCServer
-
-	// Mailer is the baboon app mailer
-	Mailer *mail.Mailer
 
 	// Database holds baboon's main database
 	Database *db.Database
@@ -95,30 +91,7 @@ func (b *Baboon) Init(c Config) error {
 		}
 	}
 
-	// create a new mailer
-	if b.Config.MailerService != "" {
-		if mailer, err := mail.NewMailer(parseMailConfig(b.Config), b.Config.MailerService, b.Config.Rootpath+"/templates/mail"); err != nil {
-			return err
-		} else {
-			b.Mailer = mailer
-		}
-	}
-
 	return nil
-}
-
-func parseMailConfig(c Config) mail.MailerSettings {
-	return mail.MailerSettings{
-		Domain:     c.MailerSettings.Domain,
-		Host:       c.MailerSettings.Host,
-		Port:       c.MailerSettings.Port,
-		Username:   c.MailerSettings.Username,
-		Password:   c.MailerSettings.Password,
-		AuthMethod: c.MailerSettings.AuthMethod,
-		Encryption: c.MailerSettings.Encryption,
-		From:       c.MailerSettings.From,
-		FromName:   c.MailerSettings.FromName,
-	}
 }
 
 // mustConnectToDB must connect to database, if db type is sqlite formats the connection.
