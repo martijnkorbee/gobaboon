@@ -1,20 +1,21 @@
 # Give your application a unique name (no spaces)
 APP_NAME=${APP_NAME}
+KEY=${KEY}
 
 # sets debug information on the loggers
 DEBUG=true
 
 # allowed url's while in maintenance mode (must be comma seperated: admin,login)
-ALLOWED_URLS=admin,login
+ALLOWED_URLS=
 
 #RPC port
 RPC_PORT=
 
-# the server name, e.g, www.mysite.com
-SERVER_NAME=localhost
+# the server name, e.g, www.{$APP_NAME}.com
+SERVER_NAME=${APP_NAME}
 SERVER_SECURE=false
-SERVER_HOST=localhost
-SERVER_PORT=4000
+SERVER_HOST=
+SERVER_PORT=
 
 # database config supported: [postgres, mysql, sqlite]
 DATABASE_TYPE=
@@ -35,16 +36,16 @@ CACHE_PASS=
 
 # cooking seetings: {name: string}, {minutes: int}, {persist: bool}, {secure: bool}
 COOKIE_NAME=${APP_NAME}
-COOKIE_DOMAIN=localhost
-COOKIE_LIFETIME=1440
-COOKIE_PERSIST=true
-COOKIE_SECURE=false
+COOKIE_DOMAIN=
+COOKIE_LIFETIME=
+COOKIE_PERSIST=
+COOKIE_SECURE=
 
 # session store: [cookie (default), redis, badger, postgres, sqlite, mysql]
-SESSION_TYPE=cookie
+SESSION_TYPE=
 
 # mail settings smtp -> later API
-MAILER=SMTP
+MAILER=
 
 # mail settings for smtp
 SMTP_DOMAIN=
@@ -58,7 +59,4 @@ SMTP_ENCRYPTION=
 SMTP_AUTH_METHOD=
 
 # template engine: [go, jet]
-RENDERER=jet
-
-# the encryption key; must be exactly 32 characters long
-KEY=${KEY}
+RENDERER=

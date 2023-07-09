@@ -3,9 +3,10 @@ package app
 import (
 	"github.com/martijnkorbee/gobaboon/pkg/cache"
 	"net/http"
+	"os"
+	"strconv"
 
 	"github.com/martijnkorbee/gobaboon/pkg/db"
-	"github.com/martijnkorbee/gobaboon/pkg/mail"
 )
 
 // Config holds all configuration settings.
@@ -50,12 +51,6 @@ type Config struct {
 
 	// DatabaseConfig holds the database configuration.
 	DatabaseConfig db.DatabaseConfig
-
-	// MailerService sets the mailer service
-	MailerService string
-
-	// MailerSettings holds the mailer settings
-	MailerSettings mail.MailerSettings
 }
 
 type CookieConfig struct {
@@ -76,4 +71,61 @@ type CookieConfig struct {
 
 	// SameSite defaults to SameSiteStrict mode
 	SameSite http.SameSite
+}
+
+// LoadConfig takes in the rootpath of the application
+// loads the config.properties and returns a the config.
+func mustLoadConfig(path string) (Config, error) {
+	var (
+		debug bool
+	)
+
+	if _, err := os.Stat(path + "/app/.config.properties"); os.IsNotExist(err) {
+		return Config{}, err
+	}
+
+	// set default values
+	debug, err := strconv.ParseBool(os.Getenv("DEBUG"))
+	if err != nil {
+		debug = true
+	}
+
+	if os.Getenv("HOST") == "" {
+		if err := os.Setenv("SERVER_HOST", "localhost"); err != nil {
+			return Config{}, err
+		}
+	}
+
+	if os.Getenv("PORT") == "" {
+		if err := os.Setenv("SERVER_PORT", "4000"); err != nil {
+			return Config{}, err
+		}
+	}
+
+	if os.Getenv("SESSION_TYPE") == "" {
+		if err := os.Setenv("SESSION_TYPE", "cookie"); err != nil {
+			return Config{}, err
+		}
+	}
+
+	return Config{
+		AppName:       os.Getenv("APP_NAME"),
+		Rootpath:      path,
+		Debug:         debug,
+		Host:          os.Getenv("SERVER_HOST"),
+		Port:          os.Getenv("SERVER_PORT"),
+		Renderer:      os.Getenv("RENDERER"),
+		SessionType:   os.Getenv("SESSION_TYPE"),
+		CacheType:     os.Getenv("CACHE_TYPE"),
+		CachePrefix:   os.Getenv("CACHE_PREFIX"),
+		EncryptionKey: os.Getenv("KEY"),
+		Cookie: CookieConfig{
+			Name:   os.Getenv("COOKIE_NAME"),
+			Domain: os.Getenv("COOKIE_DOMAIN"),
+		},
+		DatabaseConfig: db.DatabaseConfig{
+			Dialect: os.Getenv("DATABASE_TYPE"),
+			Name:    os.Getenv("DATABASE_NAME"),
+		},
+	}, nil
 }

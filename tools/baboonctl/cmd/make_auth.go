@@ -28,8 +28,8 @@ NOTE: supported databases postgres, mysql/mariadb, sqlite
 		var (
 			dbType        = os.Getenv("DATABASE_TYPE")
 			migrationName = fmt.Sprintf("%d_create_auth_tables", time.Now().UnixMicro())
-			upFilePath    = rootpath + "/database/migrations/" + migrationName + ".up.sql"
-			downFilePath  = rootpath + "/database/migrations/" + migrationName + ".down.sql"
+			upFilePath    = rootpath + "/internal/database/migrations/" + migrationName + ".up.sql"
+			downFilePath  = rootpath + "/internal/database/migrations/" + migrationName + ".down.sql"
 		)
 
 		// create up file
