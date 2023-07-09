@@ -1,5 +1,6 @@
 .vscode/*
 .idea/*
+app/bin/*
 bin/*
 assets/*
 app/.config.properties
