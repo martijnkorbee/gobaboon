@@ -1,6 +1,7 @@
 package handlers
 
 import (
+	"github.com/martijnkorbee/gobaboon/internal/database/models"
 	"github.com/martijnkorbee/gobaboon/pkg/logger"
 	"github.com/martijnkorbee/gobaboon/pkg/server"
 	"net/http"
@@ -9,6 +10,7 @@ import (
 type Handlers struct {
 	Log    *logger.Logger
 	Server *server.Server
+	Models *models.Models
 }
 
 func (h *Handlers) Home(w http.ResponseWriter, r *http.Request) {

@@ -13,16 +13,16 @@ var (
 type Models struct {
 	// any models specified here (and added in the New function)
 	// are accessible to the application
-	Users User
-	Token Token
+	Users  User
+	Tokens Token
 }
 
 func New(db *db.Database) *Models {
 	database = db.Session
 
 	return &Models{
-		Users: User{},
-		Token: Token{},
+		Users:  User{},
+		Tokens: Token{},
 	}
 }
 

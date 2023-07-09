@@ -72,8 +72,9 @@ func New() *Application {
 
 	// add handlers
 	app.Handlers = &handlers.Handlers{
-		Server: app.Server,
 		Log:    app.Log,
+		Server: app.Server,
+		Models: app.Models,
 	}
 
 	// add routes

@@ -1,14 +1,13 @@
 package handlers
 
 import (
-	"net/http"
-
 	"github.com/martijnkorbee/gobaboon/pkg/util"
+	"net/http"
 )
 
-// Ping is a default api route
+// Ping is a default api route (used to check health)
 func (h *Handlers) Ping(w http.ResponseWriter, req *http.Request) {
-	util.WriteJSON(w, http.StatusOK, map[string]string{
+	_ = util.WriteJSON(w, http.StatusOK, map[string]string{
 		"message": "pong",
 	})
 }

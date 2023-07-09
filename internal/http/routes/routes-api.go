@@ -13,6 +13,11 @@ func (ar *AppRoutes) RoutesAPI() *chi.Mux {
 	// used to check health
 	r.Get("/ping", ar.Handlers.Ping) // default route
 
+	// users
+	r.Route("/users", func(r chi.Router) {
+		r.MethodFunc("POST", "/", ar.Handlers.UsersAdd)
+	})
+
 	r.Route("/v1", func(r chi.Router) {
 		// these routes are protected
 		r.Use(ar.Middleware.AuthToken)
