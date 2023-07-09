@@ -64,7 +64,7 @@ type ServerConfig struct {
 	Cookie CookieConfig
 }
 
-// NewServer returns a new server loaded with the server config.
+// NewServer returns a new server loaded with the server config.properties.
 func NewServer(sc ServerConfig) (*Server, error) {
 	// check for rootpath
 	if sc.Rootpath == "" {
