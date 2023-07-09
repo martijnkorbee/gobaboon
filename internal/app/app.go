@@ -37,9 +37,9 @@ func (a *Application) Start() {
 	go a.listenForShutdown()
 
 	// start baboon
-	a.Log.Info().Msg("starting baboon")
+	a.Log.Info().Msg("starting app")
 	if err := a.Run(); err != nil {
-		a.Log.Fatal().Err(err).Msg("failed to start baboon")
+		a.Log.Fatal().Err(err).Msg("failed to start app")
 	}
 }
 

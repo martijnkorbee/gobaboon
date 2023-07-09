@@ -18,19 +18,7 @@ func New() *Application {
 		log.Fatalln(err)
 	}
 
-	// #######################################################################
-	// you can add your own way of loading env or use this as a starting point
-	// #######################################################################
-
-	// load configuration
-	config, err := mustLoadConfig(path)
-	if err != nil {
-		log.Fatalln(err)
-	}
-
-	app := &Application{
-		Config: config,
-	}
+	app := &Application{}
 
 	// start Application logger
 	// TODO: settings as arguments
@@ -42,6 +30,17 @@ func New() *Application {
 		LocalTime: true,
 	}
 	app.Log = applog.Start()
+
+	// #######################################################################
+	// you can add your own way of loading env or use this as a starting point
+	// #######################################################################
+
+	// load configuration
+	config, err := mustLoadConfig(path)
+	if err != nil {
+		app.Log.Fatal().Err(err).Msg("failed to load config.properties")
+	}
+	app.Config = config
 
 	// create a new server
 	if srv, err := server.NewServer(parseServerConfig(app.Config)); err != nil {

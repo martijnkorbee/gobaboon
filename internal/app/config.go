@@ -1,6 +1,7 @@
 package app
 
 import (
+	"github.com/joho/godotenv"
 	"github.com/martijnkorbee/gobaboon/pkg/cache"
 	"net/http"
 	"os"
@@ -80,7 +81,12 @@ func mustLoadConfig(path string) (Config, error) {
 		debug bool
 	)
 
-	if _, err := os.Stat(path + "/app/.config.properties"); os.IsNotExist(err) {
+	if _, err := os.Stat(path + "/.config.properties"); os.IsNotExist(err) {
+		return Config{}, err
+	}
+
+	// load config
+	if err := godotenv.Load(path + "/.config.properties"); err != nil {
 		return Config{}, err
 	}
 
@@ -90,13 +96,13 @@ func mustLoadConfig(path string) (Config, error) {
 		debug = true
 	}
 
-	if os.Getenv("HOST") == "" {
-		if err := os.Setenv("SERVER_HOST", "localhost"); err != nil {
+	if os.Getenv("SERVER_HOST") == "" {
+		if err := os.Setenv("SERVER_HOST", "0.0.0.0"); err != nil {
 			return Config{}, err
 		}
 	}
 
-	if os.Getenv("PORT") == "" {
+	if os.Getenv("SERVER_PORT") == "" {
 		if err := os.Setenv("SERVER_PORT", "4000"); err != nil {
 			return Config{}, err
 		}
