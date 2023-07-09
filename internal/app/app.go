@@ -6,6 +6,7 @@ import (
 	"github.com/martijnkorbee/gobaboon/internal/http/handlers"
 	"github.com/martijnkorbee/gobaboon/internal/http/middleware"
 	"github.com/martijnkorbee/gobaboon/internal/http/routes"
+	"github.com/martijnkorbee/gobaboon/pkg/db"
 	"github.com/martijnkorbee/gobaboon/pkg/server"
 	"os"
 	"os/signal"
@@ -19,7 +20,7 @@ type Application struct {
 	Config Config
 	Server *server.Server
 	// TODO: add db
-	//Database   *db.Database
+	Database *db.Database
 	// TODO: add cache
 	Log        *logger.Logger
 	Middleware *middleware.Middleware
