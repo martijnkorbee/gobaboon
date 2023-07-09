@@ -1,6 +1,6 @@
 FROM golang:1.20-alpine AS builder
 
-WORKDIR /app
+WORKDIR /application
 
 RUN apk add openssh gcc musl-dev make
 
@@ -11,9 +11,10 @@ RUN make app_build
 FROM alpine
 
 WORKDIR /app
-COPY --from=builder /app /app
+
+COPY --from=builder /application/app /app
+COPY --from=builder /application/bin /app/bin
 
 EXPOSE 4000
 
-CMD ["./bin/app"]
-
+ENTRYPOINT ["bin/app"]
