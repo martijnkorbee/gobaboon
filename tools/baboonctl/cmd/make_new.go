@@ -76,7 +76,7 @@ var makeNewCmd = &cobra.Command{
 		}
 		util.PrintInfo(fmt.Sprint(string(output)))
 
-		util.PrintSuccess(fmt.Sprintf("Go to the new $s directory and type: make app_start", appName, appName))
+		util.PrintSuccess(fmt.Sprintf("Go to the new %s directory and type: make app_start", appName))
 	},
 }
 
