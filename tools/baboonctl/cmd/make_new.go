@@ -88,7 +88,7 @@ func init() {
 func mustCreateConfig(appName string) {
 	color.Yellow("\tCreating .config.properties file...")
 
-	data, err := templateFS.ReadFile("templates/.config.example")
+	data, err := templateFS.ReadFile("templates/config.example")
 	if err != nil {
 		util.PrintFatal("failed to read .config.example template", err)
 	}

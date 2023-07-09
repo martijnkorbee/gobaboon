@@ -2,4 +2,4 @@
 .idea/*
 bin/*
 assets/*
-app/templates/.config.properties
+app/.config.properties
