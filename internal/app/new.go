@@ -18,15 +18,14 @@ func New() *Application {
 		log.Fatalln(err)
 	}
 
-	// load configs
-	config := Config{
-		Rootpath:    path,
-		Debug:       true,
-		Host:        "localhost",
-		Port:        "4000",
-		Renderer:    "jet",
-		SessionType: "cookie",
-		// LOAD YOUR CONFIGURATION HERE YOU COULD USE THE .env EXAMPLE
+	// #######################################################################
+	// you can add your own way of loading env or use this as a starting point
+	// #######################################################################
+
+	// load configuration
+	config, err := mustLoadConfig(path)
+	if err != nil {
+		log.Fatalln(err)
 	}
 
 	app := &Application{
