@@ -49,7 +49,7 @@ func NewSession(c CookieConfig, s *Server) *Session {
 /*
 CREATE TABLE sessions (
 	token TEXT PRIMARY KEY,
-	data BYTEA NOT NULL,
+	models BYTEA NOT NULL,
 	expiry TIMESTAMPTZ NOT NULL
 );
 

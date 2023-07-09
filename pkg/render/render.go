@@ -43,12 +43,12 @@ func New(rootpath, engine string, debug bool) *Renderer {
 // call the respective methods to render with a specific engine.
 func (r *Renderer) Page(w http.ResponseWriter, req *http.Request, view string, variables interface{}, data interface{}) error {
 
-	// default template data
+	// default template models
 	td := &TemplateData{}
 	if data != nil {
 		td = data.(*TemplateData)
 	}
-	// populate default data
+	// populate default models
 	td.CSRFToken = nosurf.Token(req)
 
 	switch strings.ToLower(r.templateEngine) {

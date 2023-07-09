@@ -22,10 +22,10 @@ func TestMain(m *testing.M) {
 		defer mr.Close()
 	}
 
-	// defere remove ./testdata to cleanup badger data
+	// defere remove ./testdata to cleanup badger models
 	defer func() {
 		if err := os.RemoveAll("./testdata"); err != nil {
-			fmt.Println("failed to remove test data:", err)
+			fmt.Println("failed to remove test models:", err)
 		}
 	}()
 

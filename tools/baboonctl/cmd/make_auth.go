@@ -1,9 +1,7 @@
 package cmd
 
 import (
-	"errors"
 	"fmt"
-	"os"
 	"time"
 
 	"github.com/martijnkorbee/gobaboon/tools/baboonctl/internal/util"
@@ -13,61 +11,55 @@ import (
 var makeAuthCmd = &cobra.Command{
 	Use:   "auth",
 	Short: "Make table migrations for baboon auth",
-	Long: `Creates and runs up and down migrations for the baboon auth tables, and adds user and token models in data directory.
-Should be called from the root directory of a baboon app that has a valid .env file.
-
-NOTE: supported databases postgres, mysql/mariadb, sqlite
+	Long: `Creates up and down migrations for the auth tables, and adds user and token models in models directory.
+Should be called from the root directory of a your application.
+SUPPORTED DATABASES: postgres, mysql/mariadb, sqlite
 `,
 	Run: func(cmd *cobra.Command, args []string) {
-		// check .env
-		if !dotenv {
-			util.PrintError("failed to make auth tables", errors.New("no .env file in current directory"))
-			return
-		}
-
 		var (
-			dbType        = os.Getenv("DATABASE_TYPE")
 			migrationName = fmt.Sprintf("%d_create_auth_tables", time.Now().UnixMicro())
-			upFilePath    = rootpath + "/internal/database/migrations/" + migrationName + ".up.sql"
-			downFilePath  = rootpath + "/internal/database/migrations/" + migrationName + ".down.sql"
+
+			// migrations
+			upSource   = "templates/migrations/auth_tables." + dbtype + ".up.sql"
+			downSource = "templates/migrations/auth_tables." + dbtype + ".down.sql"
+			upTarget   = rootpath + "/internal/database/migrations/" + migrationName + ".up.sql"
+			downTarget = rootpath + "/internal/database/migrations/" + migrationName + ".down.sql"
+
+			// models
+			tokenSource = "templates/models/token.go"
+			tokenTarget = rootpath + "/internal/database/models/token.go"
+			usersSource = "templates/models/user.go"
+			usersTarget = rootpath + "/internal/database/models/user.go"
+
+			// middleware
+			authTokenSource = "templates/middleware/auth-token.go"
+			authUsersSource = "templates/middleware/auth-user.go"
+			authTokenTarget = rootpath + "/internal/http/middleware/auth-token.go"
+			authUsersTarget = rootpath + "/internal/http/middleware/auth-user.go"
 		)
 
-		// create up file
-		err := util.CopyFileFromTemplate(templateFS, "templates/migrations/auth_tables."+dbType+".up.sql", upFilePath)
-		if err != nil {
+		// create database migrations
+		if err := util.CopyFileFromTemplate(templateFS, upSource, upTarget); err != nil {
 			util.PrintFatal("failed to create up file", err)
 		}
-
-		// create down file
-		err = util.CopyFileFromTemplate(templateFS, "templates/migrations/auth_tables."+dbType+".down.sql", downFilePath)
-		if err != nil {
+		if err := util.CopyFileFromTemplate(templateFS, downSource, downTarget); err != nil {
 			util.PrintFatal("failed to create down file", err)
 		}
 
-		util.PrintInfo("created migrations, calling migrate up ...")
-
-		// run migrations
-		migrateUp()
-
-		// create user and token models in data directory
-		err = util.CopyFileFromTemplate(templateFS, "templates/data/token.go.txt", rootpath+"/database/models/token.go")
-		if err != nil {
+		// create database models
+		if err := util.CopyFileFromTemplate(templateFS, tokenSource, tokenTarget); err != nil {
 			util.PrintError("failed to create token model", err)
 		}
-
-		err = util.CopyFileFromTemplate(templateFS, "templates/data/user.go.txt", rootpath+"/database/models/user.go")
-		if err != nil {
+		if err := util.CopyFileFromTemplate(templateFS, usersSource, usersTarget); err != nil {
 			util.PrintError("failed to create user model", err)
 		}
 
-		// create auth middleware in middleware directory
-		err = util.CopyFileFromTemplate(templateFS, "templates/middleware/auth-token.go.txt", rootpath+"/http/middleware/auth-token.go")
-		if err != nil {
+		// create auth middleware
+		if err := util.CopyFileFromTemplate(templateFS, authTokenSource, authTokenTarget); err != nil {
 			util.PrintError("failed to create auth token middleware", err)
 		}
 
-		err = util.CopyFileFromTemplate(templateFS, "templates/middleware/auth-user.go.txt", rootpath+"/http/middleware/auth-user.go")
-		if err != nil {
+		if err := util.CopyFileFromTemplate(templateFS, authUsersSource, authUsersTarget); err != nil {
 			util.PrintError("failed to create auth user middleware", err)
 		}
 	},

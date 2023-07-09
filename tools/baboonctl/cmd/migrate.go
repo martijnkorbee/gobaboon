@@ -76,7 +76,7 @@ func mustBuildDSN() string {
 			os.Getenv("DATABASE_SSL_MODE"),
 		)
 	case "sqlite":
-		dsn = fmt.Sprintf("sqlite3://%s/database/data/sqlite/%s.db",
+		dsn = fmt.Sprintf("sqlite3://%s/database/models/sqlite/%s.db",
 			rootpath,
 			os.Getenv("DATABASE_NAME"),
 		)

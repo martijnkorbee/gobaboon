@@ -5,7 +5,6 @@ import (
 	"github.com/martijnkorbee/gobaboon/tools/baboonctl/internal/util"
 	"os"
 
-	"github.com/joho/godotenv"
 	"github.com/spf13/cobra"
 )
 
@@ -19,6 +18,7 @@ var (
 
 	rootpath string
 	dotenv   bool
+	dbtype   string
 )
 
 var rootCmd = &cobra.Command{
@@ -36,23 +36,15 @@ func Execute() error {
 
 func init() {
 	cobra.OnInitialize(initConfig)
+
+	rootCmd.PersistentFlags().StringVarP(&dbtype, "db-type", "D", "", "specify your database type")
 }
 
 func initConfig() {
-
-	// set rootpath for bobo
+	// set rootpath for baboonctl
 	if path, err := os.Getwd(); err != nil {
 		util.PrintFatal("failed to get working directory", err)
 	} else {
 		rootpath = path
-	}
-
-	// check load .env
-	if util.FileExists(rootpath + "/app/.env") {
-		err := godotenv.Load(rootpath + "app/.env")
-		if err != nil {
-			util.PrintFatal("failed to load .env", err)
-		}
-		dotenv = true
 	}
 }
