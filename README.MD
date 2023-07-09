@@ -14,10 +14,12 @@
     - [x] Move baboonapp template to this repo (generated project)
     - [x] Update the generated project structure
     - [x] Include baboon logic in the result (merge baboon.go and app.go as result)
-    - [ ] Expand application struct with pkgs
+    - [ ] Expand application struct with pkgs functionality
     - [ ] Check/Fix/Test baboonctl make commands
-      - [x] Check/Fix baboonctl make new app command
+      - [x] make new app
+      - [ ] make auth
     - [ ] Release new project structure and result of creating a new project
+- [x] Add easy containerization support
 - [ ] Check/fix rpc issue #21
 - [ ] Revisit config loading and default values
 - [ ] Revisit logger pkg (include new slog from 1.21?)

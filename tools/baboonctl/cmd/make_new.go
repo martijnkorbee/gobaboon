@@ -68,13 +68,12 @@ var makeNewCmd = &cobra.Command{
 		util.PrintSuccess(fmt.Sprint("done creating new application with name:", appName))
 
 		color.Yellow("\tBuilding: %s", appName)
-		command = exec.Command("make", "app_build")
+		command = exec.Command("make", "-s", "app_build")
 		output, err = command.CombinedOutput()
 		if err != nil {
 			color.Red(fmt.Sprint(err) + ": " + string(output))
 			util.PrintFatal("failed to build app", err)
 		}
-		util.PrintInfo(fmt.Sprint(string(output)))
 
 		util.PrintSuccess(fmt.Sprintf("Go to the new %s directory and type: make app_start", appName))
 	},

@@ -16,7 +16,7 @@ import (
 var makeModelCmd = &cobra.Command{
 	Use:   "model",
 	Short: "Make a new model",
-	Long: `Creates a new model in the data directory and respective migrations in migrations directory,
+	Long: `Creates a new model in the models directory and respective migrations in migrations directory,
 if the migrate flag is passed also runs up migrations.
 
 NOTE: supported databases postgres, mysql/mariadb, sqlite
@@ -69,7 +69,7 @@ func mustMakeModel(modelName, tableName string) {
 	}
 
 	// read model go text file
-	data, err := templateFS.ReadFile("templates/data/model.go.txt")
+	data, err := templateFS.ReadFile("templates/models/model.go")
 	if err != nil {
 		util.PrintFatal("failed to read model template", err)
 	}
@@ -81,7 +81,7 @@ func mustMakeModel(modelName, tableName string) {
 
 	err = os.WriteFile(fileName, []byte(model), 0644)
 	if err != nil {
-		util.PrintFatal("failed to write model in data directory", err)
+		util.PrintFatal("failed to write model in models directory", err)
 	}
 
 	// print model feedback

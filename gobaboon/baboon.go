@@ -104,7 +104,7 @@ func (b *Baboon) mustConnectToDB() *db.Database {
 
 	// format sqlite filepath
 	if b.Config.DatabaseConfig.Dialect == "sqlite" {
-		filepath = fmt.Sprintf("%s/db-data/sqlite/%s.db", b.Config.Rootpath, b.Config.DatabaseConfig.Name)
+		filepath = fmt.Sprintf("%s/db-models/sqlite/%s.db", b.Config.Rootpath, b.Config.DatabaseConfig.Name)
 	}
 
 	// connect to db
@@ -142,7 +142,7 @@ func (b *Baboon) mustConnectToCache() cache.Cache {
 	case "badger":
 		client, err := cache.CreateBadgerCache(cache.BadgerConfig{
 			Prefix: b.Config.CachePrefix,
-			Path:   b.Config.Rootpath + "/database/data/badger",
+			Path:   b.Config.Rootpath + "/database/models/badger",
 		}, b.Log)
 		if err != nil {
 			b.Log.Fatal().Err(err).Msg("failed to connect to redis")
