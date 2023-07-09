@@ -26,16 +26,16 @@ SUPPORTED DATABASES: postgres, mysql/mariadb, sqlite
 			downTarget = rootpath + "/internal/database/migrations/" + migrationName + ".down.sql"
 
 			// models
-			tokenSource = "templates/models/token.go"
-			tokenTarget = rootpath + "/internal/database/models/token.go"
-			usersSource = "templates/models/user.go"
-			usersTarget = rootpath + "/internal/database/models/user.go"
+			tokenSource = "templates/models/token.go.txt"
+			tokenTarget = rootpath + "/internal/database/models/token.go.txt"
+			usersSource = "templates/models/user.go.txt"
+			usersTarget = rootpath + "/internal/database/models/user.go.txt"
 
 			// middleware
-			authTokenSource = "templates/middleware/auth-token.go"
-			authUsersSource = "templates/middleware/auth-user.go"
-			authTokenTarget = rootpath + "/internal/http/middleware/auth-token.go"
-			authUsersTarget = rootpath + "/internal/http/middleware/auth-user.go"
+			authTokenSource = "templates/middleware/auth-token.go.txt.txt"
+			authUsersSource = "templates/middleware/auth-user.go.txt.txt"
+			authTokenTarget = rootpath + "/internal/http/middleware/auth-token.go.txt.txt"
+			authUsersTarget = rootpath + "/internal/http/middleware/auth-user.go.txt.txt"
 		)
 
 		// create database migrations
