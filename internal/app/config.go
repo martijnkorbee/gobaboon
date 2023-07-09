@@ -90,7 +90,7 @@ func mustLoadConfig(path string) (Config, error) {
 		debug = true
 	}
 
-	if os.Getenv("HOST") == "" {
+	if os.Getenv("SERVER_HOST") == "" {
 		if err := os.Setenv("SERVER_HOST", "localhost"); err != nil {
 			return Config{}, err
 		}
