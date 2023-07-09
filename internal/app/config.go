@@ -80,7 +80,7 @@ func mustLoadConfig(path string) (Config, error) {
 		debug bool
 	)
 
-	if _, err := os.Stat(path + "app/.config.properties"); os.IsNotExist(err) {
+	if _, err := os.Stat(path + "/app/.config.properties"); os.IsNotExist(err) {
 		return Config{}, err
 	}
 
