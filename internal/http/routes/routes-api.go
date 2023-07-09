@@ -10,8 +10,16 @@ func (ar *AppRoutes) RoutesAPI() *chi.Mux {
 
 	// add your middleware here
 
-	// add your routes here
+	// used to check health
 	r.Get("/ping", ar.Handlers.Ping) // default route
+
+	r.Route("/v1", func(r chi.Router) {
+		// these routes are protected
+		r.Use(ar.Middleware.AuthToken)
+
+		// used to check health
+		r.Get("/ping", ar.Handlers.Ping) // default route
+	})
 
 	return r
 }

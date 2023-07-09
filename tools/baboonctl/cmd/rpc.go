@@ -1,7 +1,6 @@
 package cmd
 
 import (
-	"errors"
 	"net/rpc"
 	"os"
 
@@ -27,21 +26,22 @@ func init() {
 }
 
 func dialRPC() (*rpc.Client, error) {
-	// check .env
-	if !dotenv {
-		return nil, errors.New("no .env file in current directory")
-	}
-
 	var (
-		rpcport = os.Getenv("RPC_PORT")
+		rpcHost = os.Getenv("RPC_HOST")
+		rpcPort = os.Getenv("RPC_PORT")
 	)
 
-	// rpc default port is 4004
-	if rpcport == "" {
-		rpcport = "4004"
+	// rpc host default is 0.0.0.0
+	if rpcHost == "" {
+		rpcHost = "0.0.0.0"
 	}
 
-	if c, err := rpc.Dial("tcp", "127.0.0.1:"+rpcport); err != nil {
+	// rpc default port is 4004
+	if rpcPort == "" {
+		rpcPort = "4004"
+	}
+
+	if c, err := rpc.Dial("tcp", "rpcHost:"+rpcPort); err != nil {
 		return nil, err
 	} else {
 		return c, nil

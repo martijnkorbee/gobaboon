@@ -16,7 +16,7 @@ var docsCmd = &cobra.Command{
 
 		rootpath, err := os.Getwd()
 		if err != nil {
-			util.PrintError("failed to get rootpath", err)
+			util.PrintError("failed to get rootPath", err)
 		}
 
 		err = doc.GenMarkdownTree(rootCmd, rootpath+"/tools/baboonctl/docs")

@@ -20,22 +20,22 @@ SUPPORTED DATABASES: postgres, mysql/mariadb, sqlite
 			migrationName = fmt.Sprintf("%d_create_auth_tables", time.Now().UnixMicro())
 
 			// migrations
-			upSource   = "templates/migrations/auth_tables." + dbtype + ".up.sql"
-			downSource = "templates/migrations/auth_tables." + dbtype + ".down.sql"
-			upTarget   = rootpath + "/internal/database/migrations/" + migrationName + ".up.sql"
-			downTarget = rootpath + "/internal/database/migrations/" + migrationName + ".down.sql"
+			upSource   = "templates/migrations/auth_tables." + dbType + ".up.sql"
+			downSource = "templates/migrations/auth_tables." + dbType + ".down.sql"
+			upTarget   = rootPath + "/internal/database/migrations/" + migrationName + ".up.sql"
+			downTarget = rootPath + "/internal/database/migrations/" + migrationName + ".down.sql"
 
 			// models
 			tokenSource = "templates/models/token.go.txt"
-			tokenTarget = rootpath + "/internal/database/models/token.go.txt"
+			tokenTarget = rootPath + "/internal/database/models/token.go.txt"
 			usersSource = "templates/models/user.go.txt"
-			usersTarget = rootpath + "/internal/database/models/user.go.txt"
+			usersTarget = rootPath + "/internal/database/models/user.go.txt"
 
 			// middleware
 			authTokenSource = "templates/middleware/auth-token.go.txt.txt"
 			authUsersSource = "templates/middleware/auth-user.go.txt.txt"
-			authTokenTarget = rootpath + "/internal/http/middleware/auth-token.go.txt.txt"
-			authUsersTarget = rootpath + "/internal/http/middleware/auth-user.go.txt.txt"
+			authTokenTarget = rootPath + "/internal/http/middleware/auth-token.go.txt.txt"
+			authUsersTarget = rootPath + "/internal/http/middleware/auth-user.go.txt.txt"
 		)
 
 		// create database migrations

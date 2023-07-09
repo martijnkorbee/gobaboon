@@ -99,7 +99,7 @@ func NewServer(sc ServerConfig, logger *logger.Logger) (*Server, error) {
 
 	// add middleware (call before routes)
 	srv.Middleware = &Middleware{
-		roopath:      srv.config.Rootpath,
+		rootPath:     srv.config.Rootpath,
 		nosurfCookie: NewCookie(srv.config.Cookie),
 	}
 

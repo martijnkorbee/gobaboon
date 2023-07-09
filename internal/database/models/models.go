@@ -26,7 +26,7 @@ func New(db *db.Database) *Models {
 	}
 }
 
-func getInsertID(i upper.ID) int {
+func GetInsertID(i upper.ID) int {
 	idType := fmt.Sprintf("%T", i)
 	if idType == "int64" {
 		return int(i.(int64))

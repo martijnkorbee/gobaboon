@@ -16,15 +16,15 @@ var (
 	//go:embed templates
 	templateFS embed.FS
 
-	rootpath string
-	dotenv   bool
-	dbtype   string
+	rootPath string
+	dbType   string
+	dbName   string
 )
 
 var rootCmd = &cobra.Command{
 	Use:   "baboonctl",
 	Short: "Baboonctl is a quality of life improvement for building app apps and services.",
-	Long:  `Baboonctl is a convenient tool to bootstrap your app apps and services. Write your first routes within 10 min.`,
+	Long:  `Baboonctl is a convenient tool to bootstrap your app apps and services. Write your first routes in minutes.`,
 	Run: func(cmd *cobra.Command, args []string) {
 		util.PrintWarning("no command specified, use bobo help")
 	},
@@ -37,14 +37,15 @@ func Execute() error {
 func init() {
 	cobra.OnInitialize(initConfig)
 
-	rootCmd.PersistentFlags().StringVarP(&dbtype, "db-type", "D", "", "specify your database type")
+	rootCmd.PersistentFlags().StringVarP(&dbType, "db-type", "D", "", "specify your database type")
+	rootCmd.PersistentFlags().StringVarP(&dbName, "db-name", "N", "", "specify your database name")
 }
 
 func initConfig() {
-	// set rootpath for baboonctl
+	// set rootPath for baboonctl
 	if path, err := os.Getwd(); err != nil {
 		util.PrintFatal("failed to get working directory", err)
 	} else {
-		rootpath = path
+		rootPath = path
 	}
 }

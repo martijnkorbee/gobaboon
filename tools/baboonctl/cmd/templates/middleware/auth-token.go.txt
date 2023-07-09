@@ -1,10 +1,6 @@
 package middleware
 
-import (
-	"net/http"
-
-	"github.com/martijnkorbee/gobaboon/pkg/util"
-)
+import "net/http"
 
 func (m *Middleware) AuthToken(next http.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
@@ -19,8 +15,9 @@ func (m *Middleware) AuthToken(next http.Handler) http.Handler {
 			payload.Message = "not authorized"
 
 			_ = util.WriteJSON(w, http.StatusUnauthorized, payload)
+			return
+		} else {
+			next.ServeHTTP(w, r)
 		}
-
-		next.ServeHTTP(w, r)
 	})
 }

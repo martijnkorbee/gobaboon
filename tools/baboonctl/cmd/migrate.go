@@ -38,7 +38,7 @@ func init() {
 
 func mustConnectMigrator() *migrate.Migrate {
 	var (
-		source = "file://" + rootpath + "/database/migrations"
+		source = "file://" + rootPath + "/internal/database/migrations"
 		dsn    = mustBuildDSN()
 	)
 
@@ -52,8 +52,7 @@ func mustConnectMigrator() *migrate.Migrate {
 
 func mustBuildDSN() string {
 	var (
-		dbType = os.Getenv("DATABASE_TYPE")
-		dsn    string
+		dsn string
 	)
 
 	switch dbType {
@@ -76,9 +75,9 @@ func mustBuildDSN() string {
 			os.Getenv("DATABASE_SSL_MODE"),
 		)
 	case "sqlite":
-		dsn = fmt.Sprintf("sqlite3://%s/database/models/sqlite/%s.db",
-			rootpath,
-			os.Getenv("DATABASE_NAME"),
+		dsn = fmt.Sprintf("sqlite3://%s/app/db-data/sqlite/%s.db",
+			rootPath,
+			dbName,
 		)
 	default:
 		util.PrintFatal("failed to build connection string", errors.New("unsupported database type"))

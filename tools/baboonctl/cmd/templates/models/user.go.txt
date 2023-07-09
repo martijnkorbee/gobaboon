@@ -47,7 +47,7 @@ func (u *User) AddUser(user User) (ID int, err error) {
 	if err != nil {
 		return 0, err
 	}
-	ID = getInsertID(res.ID())
+	ID = GetInsertID(res.ID())
 
 	return ID, nil
 }
