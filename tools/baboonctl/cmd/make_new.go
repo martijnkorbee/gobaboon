@@ -102,9 +102,9 @@ func mustCreateConfig(appName string) {
 	env = strings.ReplaceAll(env, "${APP_NAME}", appName)
 	env = strings.ReplaceAll(env, "${KEY}", key)
 
-	err = os.WriteFile(fmt.Sprintf("./%s/app/.env", appName), []byte(env), 0644)
+	err = os.WriteFile(fmt.Sprintf("./%s/app/.config.properties", appName), []byte(env), 0644)
 	if err != nil {
-		util.PrintFatal("failed to write .env file", err)
+		util.PrintFatal("failed to write .config.properties file", err)
 	}
 }
 
