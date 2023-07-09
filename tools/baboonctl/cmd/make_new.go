@@ -49,6 +49,12 @@ var makeNewCmd = &cobra.Command{
 		color.Yellow("\tUpdating source files...")
 		mustUpdateSourceFiles()
 
+		// remove existing LICENSE file
+		color.Yellow("\tDeleting LICENSE...")
+		if err = os.Remove("LICENSE"); err != nil {
+			util.PrintWarning(err.Error())
+		}
+
 		// run go mod tidy in the project directory
 		color.Yellow("\tRunning go mod tidy...")
 
@@ -152,15 +158,6 @@ func updateSoureFile(path string, fi os.FileInfo, err error) error {
 	// check if file is directory
 	if fi.IsDir() {
 		return nil
-	}
-
-	// remove existing LICENSE file
-	_, err = filepath.Match("LICENSE", fi.Name())
-	if err == nil {
-		err = os.Remove("LICENSE")
-		if err != nil {
-			util.PrintWarning(err.Error())
-		}
 	}
 
 	// only check go files
