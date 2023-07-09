@@ -20,6 +20,7 @@ type Application struct {
 	Server *server.Server
 	// TODO: add db
 	//Database   *db.Database
+	// TODO: add cache
 	Log        *logger.Logger
 	Middleware *middleware.Middleware
 	Handlers   *handlers.Handlers

@@ -4,6 +4,7 @@ import (
 	"errors"
 	"fmt"
 	"github.com/go-git/go-git/v5"
+	butil "github.com/martijnkorbee/gobaboon/pkg/util"
 	"github.com/martijnkorbee/gobaboon/tools/baboonctl/internal/util"
 	"os"
 	"os/exec"
@@ -11,7 +12,6 @@ import (
 	"strings"
 
 	"github.com/fatih/color"
-	butil "github.com/martijnkorbee/gobaboon/pkg/util"
 	"github.com/spf13/cobra"
 )
 
@@ -33,7 +33,7 @@ var makeNewCmd = &cobra.Command{
 		// clone baboon project
 		mustCloneSkeleton(appName)
 
-		// create the .env file
+		// create the .config.properties file
 		mustCreateConfig(appName)
 
 		// update the go.mod file
@@ -86,11 +86,11 @@ func init() {
 }
 
 func mustCreateConfig(appName string) {
-	color.Yellow("\tCreating .env file...")
+	color.Yellow("\tCreating .config.properties file...")
 
-	data, err := templateFS.ReadFile("templates/config.properties")
+	data, err := templateFS.ReadFile("templates/.config.example")
 	if err != nil {
-		util.PrintFatal("failed to read config.properties template", err)
+		util.PrintFatal("failed to read .config.example template", err)
 	}
 
 	key, err := butil.RandomStringGenerator(32)

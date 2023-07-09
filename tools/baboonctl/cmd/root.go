@@ -48,8 +48,8 @@ func initConfig() {
 	}
 
 	// check load .env
-	if util.FileExists(rootpath + "/.env") {
-		err := godotenv.Load(rootpath + "/.env")
+	if util.FileExists(rootpath + "/app/.env") {
+		err := godotenv.Load(rootpath + "app/.env")
 		if err != nil {
 			util.PrintFatal("failed to load .env", err)
 		}
