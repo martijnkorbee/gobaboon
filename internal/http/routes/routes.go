@@ -23,7 +23,7 @@ func (ar *AppRoutes) Routes() *chi.Mux {
 	r.Get("/", ar.Handlers.Home) // default home route
 
 	// static routes
-	fileServer := http.FileServer(http.Dir("./app/public"))
+	fileServer := http.FileServer(http.Dir("./public"))
 	r.Handle("/public/*", http.StripPrefix("/public", fileServer))
 
 	return r
