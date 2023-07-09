@@ -17,8 +17,8 @@ import (
 
 var makeNewCmd = &cobra.Command{
 	Use:   "new",
-	Short: "Make a new baboon app",
-	Long:  "Make a new baboon app.",
+	Short: "Make a new app",
+	Long:  "Make a new app.",
 	Run: func(cmd *cobra.Command, args []string) {
 		var (
 			appName = strings.ToLower(makeNewName)
@@ -30,42 +30,19 @@ var makeNewCmd = &cobra.Command{
 			appName = exploded[len(exploded)-1]
 		}
 
-		// clone the skeleton application
+		// clone baboon project
 		mustCloneSkeleton(appName)
 
-		// create a ready to go .env file
-		mustCreateDotEnv(appName)
+		// create the .env file
+		mustCreateConfig(appName)
 
-		//// update the go.mod file
-		//mustUpdateGoModFile(appName)
+		// update the go.mod file
+		mustUpdateGoModFile(appName)
 
 		// change to new project dir
 		err := os.Chdir("./" + appName)
 		if err != nil {
-			util.PrintFatal("failed to cd to app directory", errors.New("couldn't cd in app directory"))
-		}
-
-		// check if not exist create expected folders for a new baboon app
-		fnames := []string{
-			"cmd/app/app",
-			"cmd/app/bin",
-			"http/handlers",
-			"http/middleware",
-			"http/routes",
-			"database/models",
-			"database/migrations",
-			"db-data",
-			"templates/views",
-			"templates/mail",
-			"public/static",
-			"logs",
-			"tmp",
-		}
-		for _, fname := range fnames {
-			err := butil.CreateDirIfNotExists("./" + fname)
-			if err != nil {
-				util.PrintWarning("failed to create default dir: " + fname)
-			}
+			util.PrintFatal("failed to cd to app directory", errors.New("failed to cd in app directory"))
 		}
 
 		// update the existing .go files with correct name and imports
@@ -82,14 +59,10 @@ var makeNewCmd = &cobra.Command{
 			util.PrintFatal("failed to run go mod tidy", err)
 		}
 
-		// TODO: create makefile support for windows
-		// update makefile
-		mustCreateMakeFile(appName)
-
-		util.PrintSuccess(fmt.Sprint("done creating new app:", appName))
+		util.PrintSuccess(fmt.Sprint("done creating new application with name:", appName))
 
 		color.Yellow("\tBuilding: %s", appName)
-		command = exec.Command("make", "build_app")
+		command = exec.Command("make", "app_build")
 		output, err = command.CombinedOutput()
 		if err != nil {
 			color.Red(fmt.Sprint(err) + ": " + string(output))
@@ -97,7 +70,7 @@ var makeNewCmd = &cobra.Command{
 		}
 		util.PrintInfo(fmt.Sprint(string(output)))
 
-		util.PrintSuccess(fmt.Sprintf("Start your app from dir %s and run: /cmd/app/bin/%s", appName, appName))
+		util.PrintSuccess(fmt.Sprintf("Go to the new $s directory and type: make app_start", appName, appName))
 	},
 }
 
@@ -106,12 +79,12 @@ func init() {
 	makeNewCmd.MarkFlagRequired("name")
 }
 
-func mustCreateDotEnv(appName string) {
+func mustCreateConfig(appName string) {
 	color.Yellow("\tCreating .env file...")
 
-	data, err := templateFS.ReadFile("templates/env.txt")
+	data, err := templateFS.ReadFile("templates/config.properties")
 	if err != nil {
-		util.PrintFatal("failed to read .env template", err)
+		util.PrintFatal("failed to read config.properties template", err)
 	}
 
 	key, err := butil.RandomStringGenerator(32)
@@ -123,7 +96,7 @@ func mustCreateDotEnv(appName string) {
 	env = strings.ReplaceAll(env, "${APP_NAME}", appName)
 	env = strings.ReplaceAll(env, "${KEY}", key)
 
-	err = os.WriteFile(fmt.Sprintf("./%s/.env", appName), []byte(env), 0644)
+	err = os.WriteFile(fmt.Sprintf("./%s/app/.env", appName), []byte(env), 0644)
 	if err != nil {
 		util.PrintFatal("failed to write .env file", err)
 	}
@@ -151,17 +124,10 @@ func mustCloneSkeleton(appName string) {
 func mustUpdateGoModFile(appName string) {
 	color.Yellow("\tCreating go.mod file...")
 
-	//_ = os.Remove("./" + appName + "/go.mod")
-	//
-	//data, err := templateFS.ReadFile("templates/go.mod.txt")
-	//if err != nil {
-	//	util.PrintFatal("failed to read go mod template", err)
-	//}
-
 	data, err := os.ReadFile(fmt.Sprintf("./%s/go.mod", appName))
 
 	mod := string(data)
-	mod = strings.ReplaceAll(mod, "github.com/martijnkorbee/gobaboon", makeNewName)
+	mod = strings.ReplaceAll(mod, "github.com/martijnkorbee/gobaboon", appName)
 
 	err = os.WriteFile(fmt.Sprintf("./%s/go.mod", appName), []byte(mod), 0644)
 	if err != nil {
@@ -188,6 +154,15 @@ func updateSoureFile(path string, fi os.FileInfo, err error) error {
 		return nil
 	}
 
+	// remove existing LICENSE file
+	_, err = filepath.Match("LICENSE", fi.Name())
+	if err == nil {
+		err = os.Remove("LICENSE")
+		if err != nil {
+			util.PrintWarning(err.Error())
+		}
+	}
+
 	// only check go files
 	matched, err := filepath.Match("*.go", fi.Name())
 	if err != nil {
@@ -202,7 +177,7 @@ func updateSoureFile(path string, fi os.FileInfo, err error) error {
 		}
 
 		// replace placeholder app name and write new file
-		updated := strings.ReplaceAll(string(read), "app", makeNewName)
+		updated := strings.ReplaceAll(string(read), "github.com/martijnkorbee/gobaboon", makeNewName)
 
 		err = os.WriteFile(path, []byte(updated), 0644)
 		if err != nil {
@@ -211,23 +186,4 @@ func updateSoureFile(path string, fi os.FileInfo, err error) error {
 	}
 
 	return nil
-}
-
-func mustCreateMakeFile(appName string) {
-	color.Yellow("\tUpdating makefile")
-
-	data, err := os.ReadFile("Makefile.unix")
-	if err != nil {
-		util.PrintFatal("failed to read makefile", err)
-	}
-	makefile := strings.ReplaceAll(string(data), "${APP_NAME}", appName)
-	err = os.WriteFile("Makefile", []byte(makefile), 0644)
-	if err != nil {
-		util.PrintFatal("failed to write makefile", err)
-	}
-
-	err = os.Remove("Makefile.unix")
-	if err != nil {
-		util.PrintWarning(fmt.Sprint("could not remove Makefile.unix:", err))
-	}
 }

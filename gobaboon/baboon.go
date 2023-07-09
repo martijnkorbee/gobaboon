@@ -18,7 +18,7 @@ import (
 // const version = "1.0.0"
 
 type Baboon struct {
-	// Config holds all baboon required config settings
+	// Config holds all baboon required config.properties settings
 	Config Config
 
 	// Log is the default logger for baboon
@@ -46,7 +46,7 @@ type Baboon struct {
 
 // New creates a new baboon app
 func (b *Baboon) Init(c Config) error {
-	// set config
+	// set config.properties
 	b.Config = c
 
 	// start baboon logger

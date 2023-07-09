@@ -15,7 +15,8 @@
     - [x] Update the generated project structure
     - [x] Include baboon logic in the result (merge baboon.go and app.go as result)
     - [ ] Expand application struct with pkgs
-    - [ ] Check/Fix/Test bobo make commands
+    - [ ] Check/Fix/Test baboonctl make commands
+      - [x] Check/Fix baboonctl make new app command
     - [ ] Release new project structure and result of creating a new project
 - [ ] Check/fix rpc issue #21
 - [ ] Revisit config loading and default values
