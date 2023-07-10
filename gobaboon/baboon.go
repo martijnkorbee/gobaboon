@@ -66,6 +66,39 @@ func (b *Baboon) Init(c Config) error {
 	return nil
 }
 
+<<<<<<< HEAD
+=======
+// mustConnectToDB must connect to database, if db type is sqlite formats the connection.
+//
+// Path input must be []string{rootpath, databasename}.
+func (b *Baboon) mustConnectToDB() *db.Database {
+	var (
+		filepath string
+	)
+
+	// format sqlite filepath
+	if b.Config.DatabaseConfig.Dialect == "sqlite" {
+		filepath = fmt.Sprintf("%s/db-models/sqlite/%s.db", b.Config.Rootpath, b.Config.DatabaseConfig.Name)
+	}
+
+	// connect to db
+	sess, err := db.NewConnection(b.Config.DatabaseConfig, filepath)
+	if err != nil {
+		b.Log.Fatal().Err(err).Msg("failed to connect to database")
+	}
+
+	// try connection
+	err = sess.Session.Ping()
+	if err != nil {
+		b.Log.Fatal().Err(err).Msg("failed to ping database")
+	}
+
+	b.Log.Info().Msg(fmt.Sprintf("connected to database: %s", b.Config.DatabaseConfig.Dialect))
+
+	return sess
+}
+
+>>>>>>> main
 // mustConnectToCache must connect to cache
 func (b *Baboon) mustConnectToCache() cache.Cache {
 	switch b.Config.CacheType {
