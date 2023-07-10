@@ -3,6 +3,7 @@ package cmd
 import (
 	"errors"
 	"fmt"
+	ctl "github.com/martijnkorbee/gobaboon/tools/baboonctl/internal/util"
 	"os"
 
 	"github.com/golang-migrate/migrate/v4"
@@ -10,7 +11,6 @@ import (
 	_ "github.com/golang-migrate/migrate/v4/database/postgres"
 	_ "github.com/golang-migrate/migrate/v4/database/sqlite3"
 	_ "github.com/golang-migrate/migrate/v4/source/file"
-	"github.com/martijnkorbee/gobaboon/tools/baboonctl/internal/util"
 	"github.com/spf13/cobra"
 )
 
@@ -44,7 +44,7 @@ func mustConnectMigrator() *migrate.Migrate {
 
 	m, err := migrate.New(source, dsn)
 	if err != nil {
-		util.PrintFatal("could not connect to database", err)
+		ctl.PrintFatal("could not connect to database", err)
 	}
 
 	return m
@@ -77,7 +77,7 @@ func mustBuildDSN() string {
 	case "sqlite":
 		dsn = fmt.Sprintf("sqlite3://%s/app/db-data/sqlite/%s.db", rootPath, dbName)
 	default:
-		util.PrintFatal("failed to build connection string", errors.New("unsupported database type"))
+		ctl.PrintFatal("failed to build connection string", errors.New("unsupported database type"))
 	}
 
 	return dsn

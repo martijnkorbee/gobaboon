@@ -1,7 +1,7 @@
 package cmd
 
 import (
-	"github.com/martijnkorbee/gobaboon/tools/baboonctl/internal/util"
+	ctl "github.com/martijnkorbee/gobaboon/tools/baboonctl/internal/util"
 	"github.com/spf13/cobra"
 )
 
@@ -17,17 +17,17 @@ var rpcMaintenanceCmd = &cobra.Command{
 		// dial rpc server
 		c, err := dialRPC()
 		if err != nil {
-			util.PrintError("failed to make rpc call", err)
+			ctl.PrintError("failed to make rpc call", err)
 			return
 		}
 
 		err = c.Call("RPCServer.SetMaintenanceMode", rpcMaintenanceOn, &resp)
 		if err != nil {
-			util.PrintError("failed to execute call", err)
+			ctl.PrintError("failed to execute call", err)
 			return
 		}
 
-		util.PrintSuccess(resp)
+		ctl.PrintSuccess(resp)
 	},
 }
 

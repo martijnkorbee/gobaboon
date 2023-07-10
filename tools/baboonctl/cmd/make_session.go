@@ -2,10 +2,10 @@ package cmd
 
 import (
 	"fmt"
+	ctl "github.com/martijnkorbee/gobaboon/tools/baboonctl/internal/util"
 	"os"
 	"time"
 
-	"github.com/martijnkorbee/gobaboon/tools/baboonctl/internal/util"
 	"github.com/spf13/cobra"
 )
 
@@ -26,18 +26,18 @@ NOTE: supported databases postgres, mysql/mariadb, sqlite
 		)
 
 		// create up file
-		err := util.CopyFileFromTemplate(templateFS, "templates/migrations/sessions."+dbType+".up.sql", upFilePath)
+		err := ctl.CopyFileFromTemplate(templateFS, "templates/migrations/sessions."+dbType+".up.sql", upFilePath)
 		if err != nil {
-			util.PrintFatal("failed to create up file", err)
+			ctl.PrintFatal("failed to create up file", err)
 		}
 
 		// create down file
-		err = util.CopyFileFromTemplate(templateFS, "templates/migrations/sessions."+dbType+".down.sql", downFilePath)
+		err = ctl.CopyFileFromTemplate(templateFS, "templates/migrations/sessions."+dbType+".down.sql", downFilePath)
 		if err != nil {
-			util.PrintFatal("failed to create down file", err)
+			ctl.PrintFatal("failed to create down file", err)
 		}
 
-		util.PrintInfo("created migrations, calling migrate up ...")
+		ctl.PrintInfo("created migrations, calling migrate up ...")
 
 		migrateUp()
 	},

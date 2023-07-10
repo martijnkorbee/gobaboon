@@ -17,7 +17,10 @@
     - [ ] Expand application struct with pkgs functionality
     - [ ] Check/Fix/Test baboonctl make commands
       - [x] make new app
-      - [ ] make auth
+      - [x] make auth
+      - [x] make key
+      - [ ] make model
+      - [ ] make session
     - [ ] Release new project structure and result of creating a new project
 - [x] Add easy containerization support
 - [ ] Check/fix rpc issue #21

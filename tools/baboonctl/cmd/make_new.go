@@ -4,8 +4,8 @@ import (
 	"errors"
 	"fmt"
 	"github.com/go-git/go-git/v5"
-	butil "github.com/martijnkorbee/gobaboon/pkg/util"
-	"github.com/martijnkorbee/gobaboon/tools/baboonctl/internal/util"
+	"github.com/martijnkorbee/gobaboon/pkg/util"
+	ctl "github.com/martijnkorbee/gobaboon/tools/baboonctl/internal/util"
 	"os"
 	"os/exec"
 	"path/filepath"
@@ -42,7 +42,7 @@ var makeNewCmd = &cobra.Command{
 		// change to new project dir
 		err := os.Chdir("./" + appName)
 		if err != nil {
-			util.PrintFatal("failed to cd to app directory", errors.New("failed to cd in app directory"))
+			ctl.PrintFatal("failed to cd to app directory", errors.New("failed to cd in app directory"))
 		}
 
 		// update the existing .go files with correct name and imports
@@ -52,7 +52,7 @@ var makeNewCmd = &cobra.Command{
 		// remove existing LICENSE file
 		color.Yellow("\tDeleting LICENSE...")
 		if err = os.Remove("LICENSE"); err != nil {
-			util.PrintWarning(err.Error())
+			ctl.PrintWarning(err.Error())
 		}
 
 		// run go mod tidy in the project directory
@@ -62,20 +62,20 @@ var makeNewCmd = &cobra.Command{
 		output, err := command.CombinedOutput()
 		if err != nil {
 			fmt.Println(fmt.Sprint(err) + ": " + string(output))
-			util.PrintFatal("failed to run go mod tidy", err)
+			ctl.PrintFatal("failed to run go mod tidy", err)
 		}
 
-		util.PrintSuccess(fmt.Sprint("done creating new application with name:", appName))
+		ctl.PrintSuccess(fmt.Sprint("done creating new application with name:", appName))
 
 		color.Yellow("\tBuilding: %s", appName)
 		command = exec.Command("make", "-s", "app_build")
 		output, err = command.CombinedOutput()
 		if err != nil {
 			color.Red(fmt.Sprint(err) + ": " + string(output))
-			util.PrintFatal("failed to build app", err)
+			ctl.PrintFatal("failed to build app", err)
 		}
 
-		util.PrintSuccess(fmt.Sprintf("Go to the new %s directory and type: make app_start", appName))
+		ctl.PrintSuccess(fmt.Sprintf("Go to the new %s directory and type: make app_start", appName))
 	},
 }
 
@@ -89,12 +89,12 @@ func mustCreateConfig(appName string) {
 
 	data, err := templateFS.ReadFile("templates/config.example")
 	if err != nil {
-		util.PrintFatal("failed to read .config.example template", err)
+		ctl.PrintFatal("failed to read .config.example template", err)
 	}
 
-	key, err := butil.RandomStringGenerator(32)
+	key, err := util.RandomStringGenerator(32)
 	if err != nil {
-		util.PrintFatal("failed to make key", err)
+		ctl.PrintFatal("failed to make key", err)
 	}
 
 	env := string(data)
@@ -103,7 +103,7 @@ func mustCreateConfig(appName string) {
 
 	err = os.WriteFile(fmt.Sprintf("./%s/app/.config.properties", appName), []byte(env), 0644)
 	if err != nil {
-		util.PrintFatal("failed to write .config.properties file", err)
+		ctl.PrintFatal("failed to write .config.properties file", err)
 	}
 }
 
@@ -116,13 +116,13 @@ func mustCloneSkeleton(appName string) {
 		Depth:    1,
 	})
 	if err != nil {
-		util.PrintFatal("failed to clone skeleton app", err)
+		ctl.PrintFatal("failed to clone skeleton app", err)
 	}
 
 	// remove .git directory
 	err = os.RemoveAll(fmt.Sprintf("./%s/.git", appName))
 	if err != nil {
-		util.PrintFatal("failed to remove .git directory", err)
+		ctl.PrintFatal("failed to remove .git directory", err)
 	}
 }
 
@@ -136,7 +136,7 @@ func mustUpdateGoModFile(appName string) {
 
 	err = os.WriteFile(fmt.Sprintf("./%s/go.mod", appName), []byte(mod), 0644)
 	if err != nil {
-		util.PrintFatal("failed write go mod file", err)
+		ctl.PrintFatal("failed write go mod file", err)
 	}
 }
 
@@ -144,7 +144,7 @@ func mustUpdateSourceFiles() {
 	// walk entire project folder, including subfolders
 	err := filepath.Walk(".", updateSoureFile)
 	if err != nil {
-		util.PrintFatal("failed to update source file", err)
+		ctl.PrintFatal("failed to update source file", err)
 	}
 }
 
