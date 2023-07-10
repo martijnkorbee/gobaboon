@@ -36,9 +36,6 @@ func Execute() error {
 
 func init() {
 	cobra.OnInitialize(initConfig)
-
-	rootCmd.PersistentFlags().StringVarP(&dbType, "db-type", "D", "", "specify your database type")
-	rootCmd.PersistentFlags().StringVarP(&dbName, "db-name", "N", "", "specify your database name")
 }
 
 func initConfig() {
