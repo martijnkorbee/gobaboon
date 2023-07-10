@@ -3,7 +3,6 @@ package cmd
 import (
 	"fmt"
 	ctl "github.com/martijnkorbee/gobaboon/tools/baboonctl/internal/util"
-	"os"
 	"time"
 
 	"github.com/spf13/cobra"
