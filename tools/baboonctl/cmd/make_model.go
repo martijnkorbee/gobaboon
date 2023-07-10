@@ -16,10 +16,9 @@ import (
 var makeModelCmd = &cobra.Command{
 	Use:   "model",
 	Short: "Make a new model",
-	Long: `Creates a new model in the models directory and respective migrations in migrations directory,
-if the migrate flag is passed also runs up migrations.
+	Long: `Creates a new model entry in the models directory and migrations in migrations directory.
 
-NOTE: supported databases postgres, mysql/mariadb, sqlite
+SUPPORTED DATABASES: [postgres, mysql, mariadb, sqlite]
 `,
 	Run: func(cmd *cobra.Command, args []string) {
 		var (
