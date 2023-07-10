@@ -13,16 +13,22 @@ var (
 type Models struct {
 	// any models specified here (and added in the New function)
 	// are accessible to the application
-	Users  User
-	Tokens Token
+	/*
+		<- required after you use baboonctl make auth ->
+		//Users  User
+		//Tokens Token
+	*/
 }
 
 func New(db *db.Database) *Models {
 	database = db.Session
 
 	return &Models{
-		Users:  User{},
-		Tokens: Token{},
+		/*
+			<- required after you use baboonctl make auth ->
+			//Users:  User{},
+			//Tokens: Token{},
+		*/
 	}
 }
 

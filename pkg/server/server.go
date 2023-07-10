@@ -88,9 +88,6 @@ func NewServer(sc ServerConfig, logger *logger.Logger) (*Server, error) {
 		Log:    logger,
 	}
 
-	// set logger service
-	srv.Log.With().Str("service", "server")
-
 	// add renderer (call before middleware)
 	srv.Renderer = render.New(srv.config.Rootpath, srv.config.Renderer, srv.config.Debug)
 
