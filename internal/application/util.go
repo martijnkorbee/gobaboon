@@ -1,4 +1,4 @@
-package app
+package application
 
 import (
 	"github.com/martijnkorbee/gobaboon/pkg/server"

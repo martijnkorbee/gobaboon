@@ -3,9 +3,11 @@ package gobaboon
 import (
 	"database/sql"
 	"errors"
+	"fmt"
 	"github.com/dgraph-io/badger"
 	"github.com/gomodule/redigo/redis"
 	"github.com/martijnkorbee/gobaboon/pkg/cache"
+	"github.com/martijnkorbee/gobaboon/pkg/db"
 	"github.com/martijnkorbee/gobaboon/pkg/rpc"
 	"github.com/martijnkorbee/gobaboon/pkg/server"
 	"github.com/robfig/cron/v3"
@@ -16,9 +18,6 @@ import (
 type Baboon struct {
 	// Config holds all baboon required .config.properties settings
 	Config Config
-
-	// Scheduler can be used to schedule tasks (like cron jobs)
-	Scheduler *cron.Cron
 
 	// Server is the baboon app server.
 	Server *server.Server

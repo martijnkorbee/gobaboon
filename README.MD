@@ -1,9 +1,7 @@
-<div align="center">
-  <img src="app/public/static/images/gobaboon.jpg" alt="gobaboon" width="200px" height="200px">
-</div>
-
 # Gobaboon
-Baboon aims to kickstart the development of go web and api projects by laying out a project structure and doing the scaffolding for tasks that could be seen as repetitive in various projects.</p>
+Baboon aims to kickstart the development of your go web and api projects without dependency on this project. 
+
+You can start your own project by cloning or forking this repo or use baboonctl to kickstart your project. Additionally, with the baboonctl you can easily add user and token based authentication, models, persistent session store and caching.
 
 ## GOTO
 * [baboonctl](#baboonctl)

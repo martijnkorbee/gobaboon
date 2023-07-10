@@ -1,4 +1,4 @@
-// Logger package abstracts the creation of service oriented loggers with log rotating build in. We are using zerologger and lumberjack.
+// Logger package abstracts the creation of service oriented loggers with log rotating build in. Using zerologger and lumberjack.
 // Refer to https://zerolog.io/ and https://pkg.go.dev/gopkg.in/natefinch/lumberjack.v2 for full documentation.
 package logger
 
