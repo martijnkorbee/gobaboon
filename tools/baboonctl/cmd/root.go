@@ -2,7 +2,7 @@ package cmd
 
 import (
 	"embed"
-	"github.com/martijnkorbee/gobaboon/tools/baboonctl/internal/util"
+	ctl "github.com/martijnkorbee/gobaboon/tools/baboonctl/internal/util"
 	"os"
 
 	"github.com/spf13/cobra"
@@ -26,7 +26,7 @@ var rootCmd = &cobra.Command{
 	Short: "Baboonctl is a quality of life improvement for building app apps and services.",
 	Long:  `Baboonctl is a convenient tool to bootstrap your app apps and services. Write your first routes in minutes.`,
 	Run: func(cmd *cobra.Command, args []string) {
-		util.PrintWarning("no command specified, use bobo help")
+		ctl.PrintWarning("no command specified, use bobo help")
 	},
 }
 
@@ -41,7 +41,7 @@ func init() {
 func initConfig() {
 	// set rootPath for baboonctl
 	if path, err := os.Getwd(); err != nil {
-		util.PrintFatal("failed to get working directory", err)
+		ctl.PrintFatal("failed to get working directory", err)
 	} else {
 		rootPath = path
 	}

@@ -1,10 +1,10 @@
 package cmd
 
 import (
+	ctl "github.com/martijnkorbee/gobaboon/tools/baboonctl/internal/util"
 	"log"
 	"os"
 
-	"github.com/martijnkorbee/gobaboon/tools/baboonctl/internal/util"
 	"github.com/spf13/cobra"
 	"github.com/spf13/cobra/doc"
 )
@@ -16,7 +16,7 @@ var docsCmd = &cobra.Command{
 
 		rootpath, err := os.Getwd()
 		if err != nil {
-			util.PrintError("failed to get rootPath", err)
+			ctl.PrintError("failed to get rootPath", err)
 		}
 
 		err = doc.GenMarkdownTree(rootCmd, rootpath+"/tools/baboonctl/docs")

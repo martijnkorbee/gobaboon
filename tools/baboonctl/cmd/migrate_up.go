@@ -1,7 +1,7 @@
 package cmd
 
 import (
-	"github.com/martijnkorbee/gobaboon/tools/baboonctl/internal/util"
+	ctl "github.com/martijnkorbee/gobaboon/tools/baboonctl/internal/util"
 	"github.com/spf13/cobra"
 )
 
@@ -27,11 +27,11 @@ func migrateUp() {
 	defer m.Close()
 
 	if err := m.Up(); err != nil {
-		util.PrintError("error running up migration", err)
+		ctl.PrintError("error running up migration", err)
 		return
 	}
 
-	util.PrintSuccess("all up migrations ran successfully")
+	ctl.PrintSuccess("all up migrations ran successfully")
 }
 
 func migrateUpSteps(n int) {
@@ -39,9 +39,9 @@ func migrateUpSteps(n int) {
 	defer m.Close()
 
 	if err := m.Steps(n); err != nil {
-		util.PrintError("error running up migration", err)
+		ctl.PrintError("error running up migration", err)
 		return
 	}
 
-	util.PrintSuccess("up migrations ran successfully")
+	ctl.PrintSuccess("up migrations ran successfully")
 }

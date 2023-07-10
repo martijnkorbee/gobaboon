@@ -1,7 +1,7 @@
 package cmd
 
 import (
-	"github.com/martijnkorbee/gobaboon/tools/baboonctl/internal/util"
+	ctl "github.com/martijnkorbee/gobaboon/tools/baboonctl/internal/util"
 	"github.com/spf13/cobra"
 )
 
@@ -29,10 +29,10 @@ func migrateForce() {
 	defer m.Close()
 
 	if err := m.Force(-1); err != nil {
-		util.PrintError("error forcing migration", err)
+		ctl.PrintError("error forcing migration", err)
 	}
 
-	util.PrintSuccess("force migration successfully")
+	ctl.PrintSuccess("force migration successfully")
 }
 
 func migrateForceVersion(v int) {
@@ -40,8 +40,8 @@ func migrateForceVersion(v int) {
 	defer m.Close()
 
 	if err := m.Force(v); err != nil {
-		util.PrintError("error forcing migration version", err)
+		ctl.PrintError("error forcing migration version", err)
 	}
 
-	util.PrintResult("force migration successfully version", v)
+	ctl.PrintResult("force migration successfully version", v)
 }

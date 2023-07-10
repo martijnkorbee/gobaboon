@@ -3,13 +3,13 @@ package cmd
 import (
 	"errors"
 	"fmt"
+	ctl "github.com/martijnkorbee/gobaboon/tools/baboonctl/internal/util"
 	"os"
 	"strings"
 	"time"
 
 	"github.com/gertd/go-pluralize"
 	"github.com/iancoleman/strcase"
-	"github.com/martijnkorbee/gobaboon/tools/baboonctl/internal/util"
 	"github.com/spf13/cobra"
 )
 
@@ -63,15 +63,15 @@ func mustMakeModel(modelName, tableName string) {
 	)
 
 	// check if model doesn't exists
-	if util.FileExists(fileName) {
-		util.PrintFatal("failed to make model", errors.New("model already exists"))
+	if ctl.FileExists(fileName) {
+		ctl.PrintFatal("failed to make model", errors.New("model already exists"))
 		return
 	}
 
 	// read model go text file
 	data, err := templateFS.ReadFile("templates/models/model.go.txt")
 	if err != nil {
-		util.PrintFatal("failed to read model template", err)
+		ctl.PrintFatal("failed to read model template", err)
 	}
 
 	// update model go text file with new model name
@@ -81,11 +81,11 @@ func mustMakeModel(modelName, tableName string) {
 
 	err = os.WriteFile(fileName, []byte(model), 0644)
 	if err != nil {
-		util.PrintFatal("failed to write model in models directory", err)
+		ctl.PrintFatal("failed to write model in models directory", err)
 	}
 
 	// print model feedback
-	util.PrintResult("created model", fileName)
+	ctl.PrintResult("created model", fileName)
 }
 
 func mustMakeModelMigrations(tableName string) {
@@ -99,7 +99,7 @@ func mustMakeModelMigrations(tableName string) {
 	// create up file
 	data, err := templateFS.ReadFile("templates/migrations/model_table." + dbType + ".up.sql.txt")
 	if err != nil {
-		util.PrintFatal("failed to read migration template", err)
+		ctl.PrintFatal("failed to read migration template", err)
 	}
 	// update migration template with new model name
 	tmpl := string(data)
@@ -107,13 +107,13 @@ func mustMakeModelMigrations(tableName string) {
 	// write migration
 	err = os.WriteFile(upFilePath, []byte(tmpl), 0644)
 	if err != nil {
-		util.PrintFatal("failed to write migration in migrations directory", err)
+		ctl.PrintFatal("failed to write migration in migrations directory", err)
 	}
 
 	// create down file
 	data, err = templateFS.ReadFile("templates/migrations/model_table." + dbType + ".down.sql.txt")
 	if err != nil {
-		util.PrintFatal("failed to read migration template", err)
+		ctl.PrintFatal("failed to read migration template", err)
 	}
 	// update migration template with new model name
 	tmpl = string(data)
@@ -121,9 +121,9 @@ func mustMakeModelMigrations(tableName string) {
 	// write migration
 	err = os.WriteFile(downFilePath, []byte(tmpl), 0644)
 	if err != nil {
-		util.PrintFatal("failed to write migration in migrations directory", err)
+		ctl.PrintFatal("failed to write migration in migrations directory", err)
 	}
 
 	// feedback
-	util.PrintResult("created migrations for model", tableName)
+	ctl.PrintResult("created migrations for model", tableName)
 }

@@ -1,8 +1,8 @@
 package cmd
 
 import (
-	butil "github.com/martijnkorbee/gobaboon/pkg/util"
-	"github.com/martijnkorbee/gobaboon/tools/baboonctl/internal/util"
+	"github.com/martijnkorbee/gobaboon/pkg/util"
+	ctl "github.com/martijnkorbee/gobaboon/tools/baboonctl/internal/util"
 	"github.com/spf13/cobra"
 )
 
@@ -13,15 +13,14 @@ var (
 var makeKeyCmd = &cobra.Command{
 	Use:   "key",
 	Short: "Create an encryption key of n length, default 32",
-	Long: `Creates an encrytion key of n length, the default length is 32.
-	We use the crypto/rand package to get random numbers.`,
+	Long:  "Creates an encrytion key of n length, the default length is 32. Using the crypto/rand package.",
 	Run: func(cmd *cobra.Command, args []string) {
-		key, err := butil.RandomStringGenerator(keylength)
+		key, err := util.RandomStringGenerator(keylength)
 		if err != nil {
-			util.PrintError("failed to create key", err)
+			ctl.PrintError("failed to create key", err)
 			return
 		}
-		util.PrintResult("your key", key)
+		ctl.PrintResult("your key", key)
 	},
 }
 

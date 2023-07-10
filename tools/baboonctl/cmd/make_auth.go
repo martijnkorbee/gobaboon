@@ -2,9 +2,9 @@ package cmd
 
 import (
 	"fmt"
+	ctl "github.com/martijnkorbee/gobaboon/tools/baboonctl/internal/util"
 	"time"
 
-	"github.com/martijnkorbee/gobaboon/tools/baboonctl/internal/util"
 	"github.com/spf13/cobra"
 )
 
@@ -40,28 +40,28 @@ SUPPORTED DATABASES: [postgres, mysql, mariadb, sqlite]
 		)
 
 		// create database migrations
-		if err := util.CopyFileFromTemplate(templateFS, upSource, upTarget); err != nil {
-			util.PrintFatal("failed to create up file", err)
+		if err := ctl.CopyFileFromTemplate(templateFS, upSource, upTarget); err != nil {
+			ctl.PrintFatal("failed to create up file", err)
 		}
-		if err := util.CopyFileFromTemplate(templateFS, downSource, downTarget); err != nil {
-			util.PrintFatal("failed to create down file", err)
+		if err := ctl.CopyFileFromTemplate(templateFS, downSource, downTarget); err != nil {
+			ctl.PrintFatal("failed to create down file", err)
 		}
 
 		// create database models
-		if err := util.CopyFileFromTemplate(templateFS, tokenSource, tokenTarget); err != nil {
-			util.PrintError("failed to create token model", err)
+		if err := ctl.CopyFileFromTemplate(templateFS, tokenSource, tokenTarget); err != nil {
+			ctl.PrintError("failed to create token model", err)
 		}
-		if err := util.CopyFileFromTemplate(templateFS, usersSource, usersTarget); err != nil {
-			util.PrintError("failed to create user model", err)
+		if err := ctl.CopyFileFromTemplate(templateFS, usersSource, usersTarget); err != nil {
+			ctl.PrintError("failed to create user model", err)
 		}
 
 		// create auth middleware
-		if err := util.CopyFileFromTemplate(templateFS, authTokenSource, authTokenTarget); err != nil {
-			util.PrintError("failed to create auth token middleware", err)
+		if err := ctl.CopyFileFromTemplate(templateFS, authTokenSource, authTokenTarget); err != nil {
+			ctl.PrintError("failed to create auth token middleware", err)
 		}
 
-		if err := util.CopyFileFromTemplate(templateFS, authUsersSource, authUsersTarget); err != nil {
-			util.PrintError("failed to create auth user middleware", err)
+		if err := ctl.CopyFileFromTemplate(templateFS, authUsersSource, authUsersTarget); err != nil {
+			ctl.PrintError("failed to create auth user middleware", err)
 		}
 	},
 }
