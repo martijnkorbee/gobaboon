@@ -86,8 +86,8 @@ func mustMakeModel(modelName, tableName string) {
 func mustMakeModelMigrations(tableName string) {
 	var (
 		migrationName = fmt.Sprintf("%d_create_%s_table", time.Now().UnixMicro(), tableName)
-		upSource      = "templates/migrations/model_table." + dbType + ".up.sql.txt"
-		downSource    = "templates/migrations/model_table." + dbType + ".down.sql.txt"
+		upSource      = "templates/migrations/model_table." + dbType + ".up.sql"
+		downSource    = "templates/migrations/model_table." + dbType + ".down.sql"
 		upTarget      = rootPath + "/internal/database/migrations/" + migrationName + ".up.sql"
 		downTarget    = rootPath + "/internal/database/migrations/" + migrationName + ".down.sql"
 	)
