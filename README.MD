@@ -2,12 +2,13 @@
   <h1 align="center">Gobaboon</h1>
 </div>
 
-<div>
-  <p align="left">Baboon aims to kickstart the development of go web and api projects by laying out a project structure and doing the scaffolding for tasks that could be seen as repetitive in various projects.</p>
-</div>
+# Gobaboon
+Baboon aims to kickstart the development of go web and api projects by laying out a project structure and doing the scaffolding for tasks that could be seen as repetitive in various projects.</p>
 
-<div>
-  <p>At the moment of writing I am working on this project to include the things I've learned after building and deploying a REST API made on top of Baboon.</p>
+<hr>
+
+### Working on updates
+> Working on this project to include the things I've learned after building and deploying a REST API made on top of gobaboon.
 
 - [x] Update project structure
 - [ ] After creating a new project there should be no dependency on this repo:
@@ -15,51 +16,47 @@
     - [x] Update the generated project structure
     - [x] Include baboon logic in the result (merge baboon.go and app.go as result)
     - [ ] Expand application struct with pkgs functionality
-    - [ ] Check/Fix/Test baboonctl make commands
-      - [x] make auth
-      - [x] make key
-      - [x] make model
-      - [x] make new app
-      - [x] make session
-    - [ ] Release new project structure and result of creating a new project
+    - [x] Check/Fix/Test baboonctl make commands
+    - [ ] Check/Fix/Test baboonctl migrate commands
+    - [ ] Check/Fix/Test baboonctl rpc commands
+    - [ ] Document new result of creating a new project
 - [x] Add easy containerization support
 - [ ] Check/fix rpc issue #21
 - [ ] Revisit config loading and default values
 - [ ] Revisit logger pkg (include new slog from 1.21?)
 
-</div>
+<hr>
 
-<div>
-  <p>The Baboon project evolved from https://github.com/martijnkorbee/goracoon which is created following a golang course. Compared to Racoon, the project structure and inner workings had a major overhaul, inspired by: https://github.com/golang-standards/project-layout.</p>
-  <p>🟠 Gopher by: https://github.com/MariaLetta/free-gophers-pack<br></p>
-</div>
+### Used libraries
+| subject         | library                                                         |
+|-----------------|-----------------------------------------------------------------|
+| baboonctl       | [spf13/cobra](https://github.com/spf13/cobra)                   |
+| logging         | [rs/zerolog](https://github.com/rs/zerolog)                     |
+| log rotating    | [natefinch/lumberjack](https://github.com/natefinch/lumberjack) |
+| Routing         | [go-chi/chi](https://github.com/go-chi/chi)                     |
+| CSRF protection | [justinas/nosurdf](https://github.com/justinas/nosurf)          |
+| Databases       | [upper/db](https://github.com/upper/db)                         |
+| Sessions        | [alexedwards/scs](https://github.com/alexedwards/scs)           |
+   
+### Supported databases
+| Type            | Comments                                   |
+|-----------------|--------------------------------------------|
+| Postgresql      |                                            |
+| Mysql - MariaDB |                                            |
+| SQLite3         |                                            |
+| SQL Server      | _not support with baboonctl make commands_ | 
 
-<div>
-  <h2>Tech-stack</h2>
-  <p>
-  🐍 CLI-tools with: https://github.com/spf13/cobra<br>
-  🕸️ Routing with: https://github.com/go-chi/chi<br>
-  📰 Logging with: https://github.com/rs/zerolog and https://github.com/natefinch/lumberjack<br>
-  🏠 Databases with: https://github.com/upper/db<br>
-  💡 Sessions with: https://github.com/alexedwards/scs<br>
-  🛑 CSRF protection with: https://github.com/justinas/nosurf<br>
-  </p>
-  
-  #### Supported databases
-  * Postgresql
-  * Mysql/MariaDB
-  * SQLite3
-  * SQL Server -> (not supported by bobo-cli)
+### Supported caching
+| Type     | Comments                                   |
+|----------|--------------------------------------------|
+| Redis    |                                            |
+| BadgerDB |                                            |
 
-  #### Supported caching
-  * Redis
-  * BadgerDB
-</div>
+<hr>
 
 ## GOTO
 * [baboonctl](#baboonctl)
 * [Getting started](#getting-started)
-* [Project structure](#project-structure)
 * [Authentication](#authentication) 
 * [Sessions](#sessions)
 * [Middleware](#middleware)
@@ -69,88 +66,53 @@
 Refer to the full documentation: [docs](https://github.com/martijnkorbee/gobaboon/tree/master/tools/baboonctl)
 
 ## Getting started
-Clone the repo.
-```
+
+#### Clone the repo.
+```bash
 git clone https://github.com/martijnkorbee/gobaboon
 ```
-CD to the repo directory.
-```
+
+#### CD to the repo directory.
+```bash
 cd gobaboon
 ```
-Build will compile the cli in ./cmd/cli/bobo/bin.<br>
-After you can cp or mv the bin to your required bin directory.
-```
-make build_cli 
-```
-Install will build the file to ${HOME}/bin (the directory should exist and exported to your $PATH.
-```
-make install_cli
-```
-Create a new skeleton app in the current directory.
-```
-bobo make new -n <appname>
+
+#### Build or install baboonctl
+Build will compile baboonctl in ./bin.  
+After compiling you can cp or mv the binary to your preferred bin location.
+```bash
+make baboonctl_build 
 ```
 
-## Project structure
-This is the project structure of a fresh baboon kickstarted project.
+Install will build the file to your $GOPATH.
+```bash
+make baboonctl_install
 ```
-├── cmd
-│   └── web
-│       ├── app
-│       │   ├── app.go
-│       │   └── init-app.go
-│       ├── bin
-│       │   └── testapp
-│       └── main.go
-├── database
-│   └── models
-│       └── models.go
-├── go.mod
-├── go.sum
-├── http
-│   ├── handlers
-│   │   ├── handlers-api.go
-│   │   └── handlers.go
-│   ├── middleware
-│   │   └── middleware.go
-│   └── routes
-│       ├── routes-api.go
-│       └── routes.go
-├── LICENSE.md
-├── Makefile
-├── public
-│   └── static
-│       ├── html
-│       │   └── maintenance.html
-│       └── images
-│           └── gobaboon.jpg
-├── README.md
-└── templates
-    ├── mail
-    │   ├── mail.html.tmpl
-    │   └── mail.plain.tmpl
-    └── views
-        ├── home.jet
-        ├── home.page.tmpl
-        └── layouts
-            └── base.jet
+
+#### Create a new project
+Create a new project in the current directory.
+```bash
+bobo make new --name [application name]
 ```
 
 ## Authentication
-Make sure your database is available (setup the .env), and in your project root directory execute the bobo command.
-This will create migration files, runs the migrations and adds the user and token models and middleware to your project.<br>
+If you want you can add the pre-made authentication to your project.  
+This will create up and down migrations for the auth tables and add user and token models in the models directory.  
+Should be called from the application's root directory.
+> Note: after running the command - _add the models in the models struct and activate the middleware on your desired routes._
+
+```bash
+bobo make auth --db-type [value]
 ```
-bobo make auth
-```
-_Note: you still have to add the models in your models type and activate the middleware on your desired routes._
 
 ## Sessions
-Make sure your cache/database is available (setup the .env). For cache store no extra steps are required.<br>
-For SQL DB; in your project root directory execute the bobo command. This will create migration files and runs the migrations.
+If you want you can activate the persistent session store to your project.  
+Creates up and down migrations for the server's persistent sessions.
+> Note: _Set the persistent session store type in the .config.properties file._
+
+```bash
+bobo make session --db-type [value]
 ```
-bobo make session
-```
-_Note: Set persistent session store by configuring the correct session type in the .env file._
 
 ## Middleware
 Add your middleware to http/middleware.

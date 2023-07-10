@@ -12,7 +12,7 @@ var makeAuthCmd = &cobra.Command{
 	Use:   "auth",
 	Short: "Make table migrations and models for authentication",
 	Long: `Creates up and down migrations for the auth tables, and adds user and token models in models directory.
-Should be called from the root directory of a your application.
+Should be called from the root directory of your application.
 
 SUPPORTED DATABASES: [postgres, mysql, mariadb, sqlite]
 `,
