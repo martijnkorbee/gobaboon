@@ -10,10 +10,11 @@ import (
 
 var makeAuthCmd = &cobra.Command{
 	Use:   "auth",
-	Short: "Make table migrations for baboon auth",
+	Short: "Make table migrations and models for authentication",
 	Long: `Creates up and down migrations for the auth tables, and adds user and token models in models directory.
 Should be called from the root directory of a your application.
-SUPPORTED DATABASES: postgres, mysql/mariadb, sqlite
+
+SUPPORTED DATABASES: [postgres, mysql, mariadb, sqlite]
 `,
 	Run: func(cmd *cobra.Command, args []string) {
 		var (
@@ -66,5 +67,6 @@ SUPPORTED DATABASES: postgres, mysql/mariadb, sqlite
 }
 
 func init() {
+	makeAuthCmd.Flags().StringVarP(&dbType, "db-type", "t", "", "specify your database type")
 	makeAuthCmd.MarkFlagRequired("db-type")
 }
