@@ -64,3 +64,7 @@ SUPPORTED DATABASES: postgres, mysql/mariadb, sqlite
 		}
 	},
 }
+
+func init() {
+	makeAuthCmd.MarkFlagRequired("db-type")
+}
