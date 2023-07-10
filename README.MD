@@ -1,5 +1,5 @@
 <div align="center">
-  <img src="app/public/static/images/gobaboon.jpg" width="200px" height="200px">
+  <img src="app/public/static/images/gobaboon.jpg" alt="gobaboon" width="200px" height="200px">
 </div>
 
 # Gobaboon
