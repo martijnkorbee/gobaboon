@@ -19,8 +19,8 @@
       - [x] make auth
       - [x] make key
       - [x] make model
-      - [x] make new app
-      - [x] make session
+      - [x] make new
+      - [ ] make session
     - [ ] Release new project structure and result of creating a new project
 - [x] Add easy containerization support
 - [ ] Check/fix rpc issue #21
