@@ -3,12 +3,9 @@ package gobaboon
 import (
 	"database/sql"
 	"errors"
-	"fmt"
 	"github.com/dgraph-io/badger"
 	"github.com/gomodule/redigo/redis"
 	"github.com/martijnkorbee/gobaboon/pkg/cache"
-	"github.com/martijnkorbee/gobaboon/pkg/db"
-	"github.com/martijnkorbee/gobaboon/pkg/logger"
 	"github.com/martijnkorbee/gobaboon/pkg/rpc"
 	"github.com/martijnkorbee/gobaboon/pkg/server"
 	"github.com/robfig/cron/v3"
@@ -20,10 +17,6 @@ type Baboon struct {
 	// Config holds all baboon required .config.properties settings
 	Config Config
 
-	// Log is the default logger for baboon
-	// Applications using baboon should assign their own loggers as in the skeleton app.
-	Log *logger.Logger
-
 	// Scheduler can be used to schedule tasks (like cron jobs)
 	Scheduler *cron.Cron
 
@@ -32,9 +25,6 @@ type Baboon struct {
 
 	// RPCServer is baboon's RPC server
 	RPCServer *rpc.RPCServer
-
-	// Database holds baboon's main database
-	Database *db.Database
 
 	// Cache is baboon's cache client
 	Cache cache.Cache
@@ -45,30 +35,12 @@ func (b *Baboon) Init(c Config) error {
 	// set .config.properties
 	b.Config = c
 
-	// start baboon logger
-	log := &logger.LoggerConfig{
-		Rootpath:   b.Config.Rootpath,
-		Debug:      b.Config.Debug,
-		Console:    b.Config.Debug,
-		ToFile:     !b.Config.Debug,
-		Service:    "baboon-main",
-		Filename:   "/logs/baboon_log.log",
-		MaxBackups: 2,
-		LocalTime:  true,
-	}
-	b.Log = log.Start()
-
 	// create scheduler
 	b.Scheduler = cron.New()
 
 	// create RPC server
 	// TODO: disabled
 	//b.RPCServer = rpc.NewRPCServer(b.Config.Host, b.Config.RPCport)
-
-	// connect to database
-	if b.Config.DatabaseConfig.Dialect != "" {
-		b.Database = b.mustConnectToDB()
-	}
 
 	// connect to cache
 	if b.Config.CacheType != "" {
@@ -94,6 +66,8 @@ func (b *Baboon) Init(c Config) error {
 	return nil
 }
 
+<<<<<<< HEAD
+=======
 // mustConnectToDB must connect to database, if db type is sqlite formats the connection.
 //
 // Path input must be []string{rootpath, databasename}.
@@ -124,6 +98,7 @@ func (b *Baboon) mustConnectToDB() *db.Database {
 	return sess
 }
 
+>>>>>>> main
 // mustConnectToCache must connect to cache
 func (b *Baboon) mustConnectToCache() cache.Cache {
 	switch b.Config.CacheType {

@@ -59,7 +59,7 @@ func init() {
 
 func mustMakeModel(modelName, tableName string) {
 	var (
-		fileName = rootpath + "/database/models/" + strings.ToLower(modelName) + ".go"
+		fileName = rootPath + "/database/models/" + strings.ToLower(modelName) + ".go"
 	)
 
 	// check if model doesn't exists
@@ -69,7 +69,11 @@ func mustMakeModel(modelName, tableName string) {
 	}
 
 	// read model go text file
+<<<<<<< HEAD
+	data, err := templateFS.ReadFile("templates/models/model.go.txt")
+=======
 	data, err := templateFS.ReadFile("templates/models/model.go")
+>>>>>>> main
 	if err != nil {
 		util.PrintFatal("failed to read model template", err)
 	}
@@ -89,17 +93,11 @@ func mustMakeModel(modelName, tableName string) {
 }
 
 func mustMakeModelMigrations(tableName string) {
-	// check .env
-	if !dotenv {
-		util.PrintError("failed to make migrations for model", errors.New("no .env file in current directory"))
-		return
-	}
-
 	var (
 		dbType        = os.Getenv("DATABASE_TYPE")
 		migrationName = fmt.Sprintf("%d_create_%s_table", time.Now().UnixMicro(), tableName)
-		upFilePath    = rootpath + "/database/migrations/" + migrationName + ".up.sql"
-		downFilePath  = rootpath + "/database/migrations/" + migrationName + ".down.sql"
+		upFilePath    = rootPath + "/database/migrations/" + migrationName + ".up.sql"
+		downFilePath  = rootPath + "/database/migrations/" + migrationName + ".down.sql"
 	)
 
 	// create up file

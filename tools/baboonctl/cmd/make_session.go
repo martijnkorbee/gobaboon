@@ -1,7 +1,6 @@
 package cmd
 
 import (
-	"errors"
 	"fmt"
 	"os"
 	"time"
@@ -19,17 +18,11 @@ Should be called from the root directory of a baboon app that has a valid .env f
 NOTE: supported databases postgres, mysql/mariadb, sqlite
 `,
 	Run: func(cmd *cobra.Command, args []string) {
-		// check .env
-		if !dotenv {
-			util.PrintError("failed to make sessions", errors.New("no .env file in current directory"))
-			return
-		}
-
 		var (
 			dbType        = os.Getenv("DATABASE_TYPE")
 			migrationName = fmt.Sprintf("%d_create_sessions_table", time.Now().UnixMicro())
-			upFilePath    = rootpath + "/database/migrations/" + migrationName + ".up.sql"
-			downFilePath  = rootpath + "/database/migrations/" + migrationName + ".down.sql"
+			upFilePath    = rootPath + "/database/migrations/" + migrationName + ".up.sql"
+			downFilePath  = rootPath + "/database/migrations/" + migrationName + ".down.sql"
 		)
 
 		// create up file

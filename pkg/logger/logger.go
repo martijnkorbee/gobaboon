@@ -64,13 +64,13 @@ type LoggerConfig struct {
 	Compress bool
 }
 
-// Starts creates and starts the logger and returns a pointer to the Logger.
-func (l *LoggerConfig) Start() *Logger {
-	if l.Filename == "" {
-		l.Filename = "/logs/log.log"
+// New creates and starts the logger
+func New(config LoggerConfig) *Logger {
+	if config.Filename == "" {
+		config.Filename = "/logs/log.log"
 	}
-	if l.Service == "" {
-		l.Service = "default"
+	if config.Service == "" {
+		config.Service = "default"
 	}
 
 	var log zerolog.Logger
@@ -78,26 +78,26 @@ func (l *LoggerConfig) Start() *Logger {
 
 	// log default settings
 	zerolog.TimeFieldFormat = zerolog.TimeFormatUnixMicro
-	log = log.Level(zerolog.InfoLevel).With().Str("service", l.Service).Timestamp().Logger()
+	log = log.Level(zerolog.InfoLevel).With().Str("service", config.Service).Timestamp().Caller().Logger()
 
 	// log debug settings
-	if l.Debug {
-		log = log.Level(zerolog.DebugLevel).With().Caller().Logger()
+	if config.Debug {
+		log = log.Level(zerolog.DebugLevel).With().Stack().Logger()
 	}
 
 	// create writers
-	if l.Console {
+	if config.Console {
 		cw := zerolog.ConsoleWriter{Out: os.Stderr, TimeFormat: time.RFC3339}
 		writers = append(writers, cw)
 	}
-	if l.ToFile {
+	if config.ToFile {
 		fw := lumberjack.Logger{
-			Filename:   l.Rootpath + l.Filename,
-			MaxSize:    l.MaxSize,
-			MaxAge:     l.MaxAge,
-			MaxBackups: l.MaxBackups,
-			LocalTime:  l.LocalTime,
-			Compress:   l.Compress,
+			Filename:   config.Rootpath + config.Filename,
+			MaxSize:    config.MaxSize,
+			MaxAge:     config.MaxAge,
+			MaxBackups: config.MaxBackups,
+			LocalTime:  config.LocalTime,
+			Compress:   config.Compress,
 		}
 		writers = append(writers, &fw)
 	}

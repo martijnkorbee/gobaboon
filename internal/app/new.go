@@ -1,10 +1,14 @@
 package app
 
 import (
+	"fmt"
+	"github.com/martijnkorbee/gobaboon/internal/database/models"
 	"github.com/martijnkorbee/gobaboon/internal/http/handlers"
 	"github.com/martijnkorbee/gobaboon/internal/http/middleware"
 	"github.com/martijnkorbee/gobaboon/internal/http/routes"
+	"github.com/martijnkorbee/gobaboon/pkg/db"
 	"github.com/martijnkorbee/gobaboon/pkg/server"
+	"github.com/martijnkorbee/gobaboon/pkg/util"
 	"log"
 	"os"
 
@@ -20,49 +24,57 @@ func New() *Application {
 
 	app := &Application{}
 
+	// load configuration
+	config, err := mustLoadConfig(path)
+	app.Config = config
+
 	// start Application logger
-	// TODO: settings as arguments
-	applog := &logger.LoggerConfig{
+	app.Log = logger.New(logger.LoggerConfig{
 		Rootpath:  app.Config.Rootpath,
 		Debug:     app.Config.Debug,
 		Console:   true,
 		Service:   "Application",
 		LocalTime: true,
-	}
-	app.Log = applog.Start()
+	})
 
-	// #######################################################################
-	// you can add your own way of loading env or use this as a starting point
-	// #######################################################################
-
-	// load configuration
-	config, err := mustLoadConfig(path)
 	if err != nil {
-		app.Log.Fatal().Err(err).Msg("failed to load config.properties")
+		app.Log.Fatal().Err(err).Msg("failed load config.properties not allowed")
 	}
-	app.Config = config
 
 	// create a new server
-	if srv, err := server.NewServer(parseServerConfig(app.Config)); err != nil {
-		app.Log.Fatal().Err(err).Msg("failed to create new server")
-	} else {
-		app.Server = srv
+	app.Server, err = server.NewServer(parseServerConfig(app.Config), app.Log)
+	if err != nil {
+		app.Log.Fatal().Err(err).Msg("failed server not allowed")
 	}
 
-	//// add models
-	//if app.Config.DatabaseConfig.Dialect != "" {
-	//	app.Models = models.New(app.Database)
-	//}
+	// connect to database
+	if app.Config.DatabaseConfig.Dialect != "" {
+		app.Database, err = mustConnectToDB(&app.Config)
+		if err != nil {
+			app.Log.Fatal().Err(err).Msg("failed db connection not allowed")
+		} else {
+			app.Log.Info().Msg("connected to database")
+		}
+	} else {
+		app.Log.Warn().Msg("no database specified")
+	}
+
+	// add models
+	if app.Config.DatabaseConfig.Dialect != "" {
+		app.Models = models.New(app.Database)
+	}
 
 	// add middleware
 	app.Middleware = &middleware.Middleware{
-		Models: app.Models,
+		Session: app.Server.Session,
+		Models:  app.Models,
 	}
 
 	// add handlers
 	app.Handlers = &handlers.Handlers{
-		Server: app.Server,
 		Log:    app.Log,
+		Server: app.Server,
+		Models: app.Models,
 	}
 
 	// add routes
@@ -76,4 +88,34 @@ func New() *Application {
 	app.Server.Router.Mount("/api", app.Routes.RoutesAPI()) // API routes
 
 	return app
+}
+
+// Path input must be []string{rootpath, databasename}.
+func mustConnectToDB(config *Config) (*db.Database, error) {
+	var (
+		filepath string
+	)
+
+	// format sqlite filepath
+	if config.DatabaseConfig.Dialect == "sqlite" {
+		// create directory if not exists
+		if err := util.CreateDirIfNotExists(config.Rootpath + "/db-data/sqlite"); err != nil {
+			return nil, err
+		}
+		filepath = fmt.Sprintf("%s/db-data/sqlite/%s.db", config.Rootpath, config.DatabaseConfig.Name)
+	}
+
+	// connect to db
+	sess, err := db.NewConnection(config.DatabaseConfig, filepath)
+	if err != nil {
+		return nil, err
+	}
+
+	// try connection
+	err = sess.Session.Ping()
+	if err != nil {
+		return nil, err
+	}
+
+	return sess, nil
 }

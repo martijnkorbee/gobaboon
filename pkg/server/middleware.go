@@ -12,7 +12,7 @@ import (
 
 // Middleware holds all default middleware used by the server.
 type Middleware struct {
-	roopath      string
+	rootPath     string
 	nosurfCookie http.Cookie
 }
 
@@ -55,7 +55,7 @@ func (m *Middleware) CheckMaintenanceMode(next http.Handler) http.Handler {
 				w.WriteHeader(http.StatusServiceUnavailable)
 				w.Header().Set("Retry-After:", "300")
 				w.Header().Set("Cache-Control", "no-store, no-cache, must-revalidate, post-check=0, pre-check=0")
-				http.ServeFile(w, r, fmt.Sprintf("%s/public/static/html/maintenance.html", m.roopath))
+				http.ServeFile(w, r, fmt.Sprintf("%s/public/static/html/maintenance.html", m.rootPath))
 				return
 			}
 		}

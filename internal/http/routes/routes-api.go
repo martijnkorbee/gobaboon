@@ -10,8 +10,22 @@ func (ar *AppRoutes) RoutesAPI() *chi.Mux {
 
 	// add your middleware here
 
-	// add your routes here
+	// used to check health
 	r.Get("/ping", ar.Handlers.Ping) // default route
+
+	// users
+	r.Route("/users/{email}", func(r chi.Router) {
+		r.MethodFunc("POST", "/", ar.Handlers.UsersAdd)
+		r.MethodFunc("DELETE", "/", ar.Handlers.UsersDelete)
+	})
+
+	r.Route("/v1", func(r chi.Router) {
+		// these routes are protected
+		r.Use(ar.Middleware.AuthToken)
+
+		// used to check health
+		r.Get("/ping", ar.Handlers.Ping) // default route
+	})
 
 	return r
 }

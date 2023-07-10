@@ -47,6 +47,7 @@ CREATE TABLE "tokens" (
 	"token_hash"	BLOB NOT NULL,
 	"created_at"	TEXT NOT NULL DEFAULT 'datetime()',
 	"updated_at"	TEXT NOT NULL DEFAULT 'datetime()',
+    "expiry" TEXT NOT NULL,
 	PRIMARY KEY("id" AUTOINCREMENT),
 	FOREIGN KEY("user_id") REFERENCES "users"("id") ON DELETE CASCADE ON UPDATE CASCADE
 );

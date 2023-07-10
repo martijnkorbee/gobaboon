@@ -65,7 +65,7 @@ type ServerConfig struct {
 }
 
 // NewServer returns a new server loaded with the server .config.properties.
-func NewServer(sc ServerConfig) (*Server, error) {
+func NewServer(sc ServerConfig, logger *logger.Logger) (*Server, error) {
 	// check for rootpath
 	if sc.Rootpath == "" {
 		return nil, errors.New("rootpath is empty, required")
@@ -73,7 +73,7 @@ func NewServer(sc ServerConfig) (*Server, error) {
 
 	// set default variables
 	if sc.Host == "" {
-		sc.Host = "localhost"
+		sc.Host = "0.0.0.0"
 	}
 	if sc.Port == "" {
 		sc.Port = "4000"
@@ -85,17 +85,11 @@ func NewServer(sc ServerConfig) (*Server, error) {
 	// create server
 	srv := Server{
 		config: sc,
+		Log:    logger,
 	}
 
-	// create logger
-	log := &logger.LoggerConfig{
-		Rootpath: srv.config.Rootpath,
-		Debug:    srv.config.Debug,
-		Console:  true,
-		Service:  "webserver",
-	}
-	// start logger
-	srv.Log = log.Start()
+	// set logger service
+	srv.Log.With().Str("service", "server")
 
 	// add renderer (call before middleware)
 	srv.Renderer = render.New(srv.config.Rootpath, srv.config.Renderer, srv.config.Debug)
@@ -105,7 +99,7 @@ func NewServer(sc ServerConfig) (*Server, error) {
 
 	// add middleware (call before routes)
 	srv.Middleware = &Middleware{
-		roopath:      srv.config.Rootpath,
+		rootPath:     srv.config.Rootpath,
 		nosurfCookie: NewCookie(srv.config.Cookie),
 	}
 
