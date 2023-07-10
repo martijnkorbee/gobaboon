@@ -14,7 +14,7 @@ Make all kinds of things with the baboonctl.
 
 ### SEE ALSO
 
-* [baboonctl](../../README.md/baboonctl.md)	 - Baboonctl is a quality of life improvement for building app apps and services.
+* [baboonctl](../baboonctl.md)	 - Baboonctl is a quality of life improvement for building app apps and services.
 * [baboonctl make auth](baboonctl_make_auth.md)	 - Make table migrations and models for authentication
 * [baboonctl make key](baboonctl_make_key.md)	 - Create an encryption key of n length, default 32
 * [baboonctl make model](baboonctl_make_model.md)	 - Make a new model

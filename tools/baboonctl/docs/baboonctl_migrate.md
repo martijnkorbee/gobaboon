@@ -14,7 +14,7 @@ Create or run migrations.
 
 ### SEE ALSO
 
-* [baboonctl](../../README.md/baboonctl.md)	 - Baboonctl is a quality of life improvement for building app apps and services.
+* [baboonctl](../baboonctl.md)	 - Baboonctl is a quality of life improvement for building app apps and services.
 * [baboonctl migrate down](baboonctl_migrate_down.md)	 - Runs all non run down migrations
 * [baboonctl migrate force](baboonctl_migrate_force.md)	 - Resets migration version
 * [baboonctl migrate up](baboonctl_migrate_up.md)	 - Runs all non run up migrations
