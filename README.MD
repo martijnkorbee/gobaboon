@@ -1,9 +1,17 @@
 <div align="center">
-  <h1 align="center">Gobaboon</h1>
+  <img src="app/public/static/images/gobaboon.jpg" width="200px" height="200px">
 </div>
 
 # Gobaboon
 Baboon aims to kickstart the development of go web and api projects by laying out a project structure and doing the scaffolding for tasks that could be seen as repetitive in various projects.</p>
+
+## GOTO
+* [baboonctl](#baboonctl)
+* [Getting started](#getting-started)
+* [Authentication](#authentication)
+* [Sessions](#sessions)
+* [Middleware](#middleware)
+* [Routes and handlers](#routes-and-handlers)
 
 <hr>
 
@@ -51,16 +59,6 @@ Baboon aims to kickstart the development of go web and api projects by laying ou
 |----------|--------------------------------------------|
 | Redis    |                                            |
 | BadgerDB |                                            |
-
-<hr>
-
-## GOTO
-* [baboonctl](#baboonctl)
-* [Getting started](#getting-started)
-* [Authentication](#authentication) 
-* [Sessions](#sessions)
-* [Middleware](#middleware)
-* [Routes and handlers](#routes-and-handlers)
 
 ## baboonctl
 Refer to the full documentation: [docs](https://github.com/martijnkorbee/gobaboon/tree/master/tools/baboonctl)
