@@ -1,6 +1,9 @@
 package middleware
 
-import "net/http"
+import (
+	"github.com/martijnkorbee/gobaboon/pkg/util"
+	"net/http"
+)
 
 func (m *Middleware) AuthToken(next http.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {

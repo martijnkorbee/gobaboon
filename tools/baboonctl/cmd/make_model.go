@@ -69,11 +69,7 @@ func mustMakeModel(modelName, tableName string) {
 	}
 
 	// read model go text file
-<<<<<<< HEAD
 	data, err := templateFS.ReadFile("templates/models/model.go.txt")
-=======
-	data, err := templateFS.ReadFile("templates/models/model.go")
->>>>>>> main
 	if err != nil {
 		util.PrintFatal("failed to read model template", err)
 	}

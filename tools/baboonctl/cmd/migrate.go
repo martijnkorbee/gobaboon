@@ -75,16 +75,7 @@ func mustBuildDSN() string {
 			os.Getenv("DATABASE_SSL_MODE"),
 		)
 	case "sqlite":
-<<<<<<< HEAD
-		dsn = fmt.Sprintf("sqlite3://%s/app/db-data/sqlite/%s.db",
-			rootPath,
-			dbName,
-=======
-		dsn = fmt.Sprintf("sqlite3://%s/database/models/sqlite/%s.db",
-			rootpath,
-			os.Getenv("DATABASE_NAME"),
->>>>>>> main
-		)
+		dsn = fmt.Sprintf("sqlite3://%s/app/db-data/sqlite/%s.db", rootPath, dbName)
 	default:
 		util.PrintFatal("failed to build connection string", errors.New("unsupported database type"))
 	}

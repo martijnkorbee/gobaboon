@@ -16,15 +16,9 @@ var (
 	//go:embed templates
 	templateFS embed.FS
 
-<<<<<<< HEAD
 	rootPath string
 	dbType   string
 	dbName   string
-=======
-	rootpath string
-	dotenv   bool
-	dbtype   string
->>>>>>> main
 )
 
 var rootCmd = &cobra.Command{
@@ -43,7 +37,6 @@ func Execute() error {
 func init() {
 	cobra.OnInitialize(initConfig)
 
-<<<<<<< HEAD
 	rootCmd.PersistentFlags().StringVarP(&dbType, "db-type", "D", "", "specify your database type")
 	rootCmd.PersistentFlags().StringVarP(&dbName, "db-name", "N", "", "specify your database name")
 }
@@ -54,16 +47,5 @@ func initConfig() {
 		util.PrintFatal("failed to get working directory", err)
 	} else {
 		rootPath = path
-=======
-	rootCmd.PersistentFlags().StringVarP(&dbtype, "db-type", "D", "", "specify your database type")
-}
-
-func initConfig() {
-	// set rootpath for baboonctl
-	if path, err := os.Getwd(); err != nil {
-		util.PrintFatal("failed to get working directory", err)
-	} else {
-		rootpath = path
->>>>>>> main
 	}
 }
