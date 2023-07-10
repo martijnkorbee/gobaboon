@@ -16,11 +16,11 @@
     - [x] Include baboon logic in the result (merge baboon.go and app.go as result)
     - [ ] Expand application struct with pkgs functionality
     - [ ] Check/Fix/Test baboonctl make commands
-      - [x] make new app
       - [x] make auth
       - [x] make key
-      - [ ] make model
-      - [ ] make session
+      - [x] make model
+      - [x] make new app
+      - [x] make session
     - [ ] Release new project structure and result of creating a new project
 - [x] Add easy containerization support
 - [ ] Check/fix rpc issue #21
